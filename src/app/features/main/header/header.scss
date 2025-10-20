@@ -1,0 +1,44 @@
+.header{
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,21,.75) !important;
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  padding-inline: clamp(12px,4vw,24px);
+  color: var(--text);
+
+  .spacer{ flex: 1 1 auto; }
+
+  .logo{
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--text); text-decoration: none;
+    img{ width:28px; height:28px; object-fit: contain; }
+    span{ font-weight: 800; letter-spacing:.02em; }
+  }
+
+  .icons button[mat-icon-button]{ color: var(--text); opacity:.9; }
+
+  .desktop-only{ display: inline-flex; }
+  .mobile-only{ display: none; }
+
+  @media (max-width: 900px){
+    .desktop-only{ display: none; }
+    .mobile-only{ display: inline-flex; }
+  }
+}
+
+/* Темне меню Material (overlay) */
+.cdk-overlay-container .mat-mdc-menu-panel{
+  background: #0e1513 !important;
+  color: #e8f0ea !important;
+  border: 1px solid rgba(255,255,255,.06);
+  --mat-menu-container-color: #0e1513;
+  --mat-menu-item-label-text-color: #e8f0ea;
+  --mat-menu-item-icon-color: #e8f0ea;
+  --mat-menu-item-hover-state-layer-color: rgba(255,255,255,.06);
+  --mat-menu-divider-color: rgba(255,255,255,.12);
+}
+.cdk-overlay-container .mat-mdc-menu-item{
+  color: #e8f0ea !important;
+  .mat-icon{ color:#e8f0ea !important; opacity:.95; }
+  &:hover{ background-color: rgba(255,255,255,.06) !important; }
+}

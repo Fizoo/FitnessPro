@@ -1,0 +1,204 @@
+/* ===== Base layout ===== */
+.container {
+  max-width: 1124px;
+  margin-inline: 1.5rem;
+  height: calc(100dvh - 64px);
+  display: grid;
+  place-items: center;
+}
+
+.section {
+  padding: 0;
+  height: calc(100dvh - 64px);
+
+  /* Десктопи (від 1024px) */
+  @media screen and (min-width: 1024px) {
+    padding: 7rem 0 0;
+  }
+}
+
+.main {
+  overflow: hidden;
+}
+
+/* ===== Home section ===== */
+.home {
+  position: relative;
+  height: calc(100dvh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 0;
+
+  &__container {
+    display: grid;
+    gap: 1.5rem;
+    row-gap: 3rem;
+    padding-top: 4rem;
+    text-align: center;
+
+    /* Планшети (від 768px) */
+    @media screen and (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      align-items: center;
+    }
+
+    /* Десктопи (від 1024px) */
+    @media screen and (min-width: 1024px) {
+      grid-template-columns: repeat(2, max-content);
+      align-items: start;
+    }
+  }
+
+  &__data {
+    text-align: center;
+
+    /* Планшети (від 768px) */
+    @media screen and (min-width: 768px) {
+      text-align: left;
+    }
+  }
+
+  &__subtitle {
+    font-size: var(--bigger-font-size);
+    -webkit-text-stroke: 1px var(--title-color);
+    color: transparent;
+    letter-spacing: 1.5px;
+  }
+
+  &__title {
+    font-size: var(--bigger-font-size);
+    font-weight: var(--font-black);
+    margin: 0.5rem 0;
+    letter-spacing: 1.5px;
+
+    /* Десктопи (від 1024px) */
+    @media screen and (min-width: 1024px) {
+      margin: 0.75rem 0 1.25rem;
+    }
+  }
+
+  &__description {
+    margin-bottom: 2.5rem;
+
+    /* Десктопи (від 1024px) */
+    @media screen and (min-width: 1024px) {
+      width: 445px;
+      margin-bottom: 3rem;
+    }
+  }
+
+  &__img {
+    display: block;
+    position: relative;
+    z-index: 1;
+    width:550px;
+
+    margin: 0 auto;
+
+    @media screen and (max-width: 768px) {
+      width:700px;
+    }
+    /* Десктопи (від 1024px) */
+    @media screen and (min-width: 1024px) {
+      width: 950px;
+      transform: translateX(-6rem);
+    }
+  }
+
+  /* ===== Triangles ===== */
+  &__triangle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    clip-path: polygon(100% 0, 0 100%, 100% 100%);
+    height: calc(100dvh - 64px);
+
+    &-1 {
+      // width: 105px;
+      background-color: var(--first-color);
+    }
+
+    &-2 {
+      // width: 205px;
+      background-color: var(--first-color-alt);
+    }
+
+    &-3 {
+      // width: 305px;
+      background-color: var(--first-color-dark);
+    }
+  }
+
+  /* ===== MEDIA QUERIES (nested for BEM elements) ===== */
+  /* Мобільні екрани (до 375px) */
+  @media screen and (max-width: 375px) {
+    &__triangle {
+      height: calc(100dvh - 64px);
+
+      &-1 { width: 45px; }
+      &-2 { width: 135px; }
+      &-3 { width: 225px; }
+    }
+  }
+
+  /* Від 376px до 767px */
+  @media screen and (min-width: 376px) and (max-width: 767px) {
+    &__triangle {
+      height: calc(100dvh - 64px);
+
+      &-1 { width: 45px; }
+      &-2 { width: 135px; }
+      &-3 { width: 225px; }
+    }
+  }
+
+  /* Планшети (від 768px) */
+  @media screen and (min-width: 768px) {
+    &__triangle {
+      height: calc(100dvh - 64px);
+
+      &-1 { width: 145px; }
+      &-2 { width: 345px; }
+      &-3 { width: 545px; }
+    }
+  }
+
+  /* Десктопи (від 1024px) */
+  @media screen and (min-width: 1024px) {
+    &__triangle {
+      // height: calc(100dvh - 180px);
+
+      &-1 { width: 245px; }
+      &-2 { width: 545px; }
+      &-3 { width: 1145px; }
+    }
+  }
+}
+
+/* ===== Button ===== */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--first-color);
+  padding: 18px 32px;
+  border: 2px solid var(--first-color-light);
+  color: var(--title-color-black);
+  font-weight: var(--font-bold);
+  cursor: pointer;
+  transition: background 0.3s;
+
+  span {
+    font-size: 1.25rem;
+    transition: transform 0.3s;
+  }
+
+  &:hover {
+    background-color: var(--first-color-alt);
+
+    span {
+      transform: translateX(0.25rem);
+    }
+  }
+}
