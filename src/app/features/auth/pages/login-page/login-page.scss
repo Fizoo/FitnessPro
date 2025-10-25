@@ -104,7 +104,7 @@
 
 .forgot-link {
   margin: -15px 0 15px;
-  text-align: left;
+  text-align: center;
 
   a {
     font-size: 14.5px;
@@ -130,7 +130,13 @@
   border-radius: 8px;
   transition: opacity .3s;
 
-  &:hover {
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &:hover:not(:disabled) {
     opacity: .9;
   }
 }
@@ -286,5 +292,22 @@ p {
     h1{
       font-size: 30px;
     }
+  }
+}
+
+.error-message {
+  display: block;
+  color: #ff4444;
+  font-size: 12px;
+  margin-top: 5px;
+  text-align: left;
+}
+
+.input-box {
+  margin: 20px 0;
+
+  input.ng-invalid.ng-touched {
+    border: 2px solid #ff4444;
+    background: #ffe6e6;
   }
 }
