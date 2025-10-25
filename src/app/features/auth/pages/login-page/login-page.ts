@@ -51,7 +51,7 @@ export class LoginPage {
   }
 
   onLogin() {
-    this.loginForm.markAllAsTouched();
+
     console.log(this.loginForm.value)
   }
 
