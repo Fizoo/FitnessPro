@@ -1,0 +1,26 @@
+<!-- training-item.component.html -->
+<div class="training-item">
+  <div class="training-item__progress" [appProgressColorSpinner]="progress">
+    <mat-progress-spinner
+
+      [mode]="'determinate'"
+      [value]="progress"
+      [diameter]="70"
+      [strokeWidth]="4"
+      class="custom-spinner"
+    ></mat-progress-spinner>
+    <span [appProgressColorSpinner]="progress" class="progress-text">{{ progress }}%</span>
+  </div>
+
+  <div class="training-item__content">
+    <p class="training-item__day">{{ day }} workout day</p>
+    <h3 class="training-item__title">{{ title }}</h3>
+  </div>
+
+  @if (hasIndicator) {
+    <div class="training-item__indicator">
+      <div class="indicator-dot"></div>
+    </div>
+  }
+
+</div>

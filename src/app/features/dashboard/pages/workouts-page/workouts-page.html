@@ -1,0 +1,20 @@
+<app-my-program-page></app-my-program-page>
+
+<div class="box">
+  <div class="text">Workout days</div>
+  <div class="btn-box">
+    <button matIconButton   >
+      <mat-icon>sort</mat-icon>
+    </button>
+  </div>
+</div>
+
+
+@for (el of [1,2,3,4,5,6,7,8,9,10,11] ; track el) {
+  <app-training-card-wrapper
+    [hasIndicator]="false"
+    [day]="el.toString()"
+    [progress]="(10-el)*10"
+  ></app-training-card-wrapper>
+}
+
