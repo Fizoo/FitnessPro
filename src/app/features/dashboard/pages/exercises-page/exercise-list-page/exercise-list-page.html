@@ -1,0 +1,12 @@
+
+<div class="exercise-list">
+  @for (exercise of filteredExercises(); track exercise.id) {
+    <app-exercise-card
+      [exercise]="exercise"
+      [isSelected]="isExerciseSelected(exercise.id)"
+      (selected)="onExerciseSelected($event)"
+    />
+  } @empty {
+    <p class="no-results">No exercises found</p>
+  }
+</div>

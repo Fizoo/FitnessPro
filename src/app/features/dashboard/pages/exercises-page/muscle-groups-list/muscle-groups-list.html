@@ -1,0 +1,8 @@
+<div class="muscle-groups">
+  @for (group of filteredMuscleGroups(); track group.id) {
+    <app-muscle-card
+      [muscleGroup]="group"
+      (click)="onMuscleGroupClick(group)"
+    />
+  }
+</div>

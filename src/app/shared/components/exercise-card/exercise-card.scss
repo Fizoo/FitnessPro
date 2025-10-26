@@ -1,0 +1,75 @@
+.exercise-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(0.25rem);
+  }
+
+  .exercise-image {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .exercise-info {
+    flex: 1;
+
+    h3 {
+      font-size: var(--normal-font-size);
+      color: var(--title-color);
+      margin: 0;
+      font-weight: var(--font-medium);
+      text-transform: capitalize;
+      line-height: 1.4;
+    }
+  }
+
+  .checkbox {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s;
+    flex-shrink: 0;
+
+    &.checked {
+      color: var(--first-color);
+    }
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    &.checked:hover {
+      color: var(--first-color);
+      opacity: 0.8;
+    }
+
+    i {
+      font-size: 1.5rem;
+    }
+  }
+}

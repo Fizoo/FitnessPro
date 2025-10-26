@@ -1,6 +1,7 @@
 <!-- training-item.component.html -->
 <div class="training-item">
-  <div class="training-item__progress" [appProgressColorSpinner]="progress">
+  <div [style.--progress-color]="getProgressColor(progress)"
+    class="training-item__progress" >
     <mat-progress-spinner
 
       [mode]="'determinate'"
@@ -9,7 +10,7 @@
       [strokeWidth]="4"
       class="custom-spinner"
     ></mat-progress-spinner>
-    <span [appProgressColorSpinner]="progress" class="progress-text">{{ progress }}%</span>
+    <span  class="progress-text">{{ progress }}%</span>
   </div>
 
   <div class="training-item__content">

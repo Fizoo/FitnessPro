@@ -82,12 +82,12 @@
 
       <div class="input-box">
         <input formControlName="email" type="text" placeholder="Email" required>
-        @if (email?.invalid && email?.touched) {
+        @if (email.invalid && email.touched) {
           <span class="error-message">
-             @if (email?.errors?.['required']) {
+             @if (email.errors?.['required']) {
                 Email is required
              }
-                   @if (email?.errors?.['email']) {
+                   @if (email.errors?.['email']) {
               Please enter a valid email address
                   }
   </span>

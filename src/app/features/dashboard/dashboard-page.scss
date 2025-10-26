@@ -1,15 +1,21 @@
+
+
 :host {
   display: block;
   height: 100vh;
   overflow: hidden;
-  //background: var(-body-color);
+  background: var(--bg-color)
+  //background: hsl(180, 12%, 6%);
 }
 
 .container {
-  margin: 1rem;
+  max-width: 750px;
+  margin: 0 auto;
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding: 1rem;
+  background: var(--body-color);
 
   .main {
     display: flex;
@@ -18,61 +24,18 @@
     height: 100%;
     overflow: hidden;
 
-/*    .header {
-      display: grid;
-      gap: .5rem;
-      flex-shrink: 0;
-      z-index: 100;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
-      padding: 5px 0;
-      .header1{
-        display: grid;
-        grid-template-columns: 50px 1fr minmax(50px,100px);
-        align-items: center;
-        justify-content: space-between;
-      }
-      .header2{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-
-      &__box{
-       // background: red;
-        text-align: center;
-      }
-      &__box2{
-        display: flex;
-        justify-content: space-between;
-        padding: 0 5px;
-
-      }
-
-    }*/
-
     .content {
       flex: 1;
       overflow-y: auto;
+      overflow-x: hidden; // Приховати горизонтальний скрол
 
-      //padding: 20px;
+      // Приховати scrollbar
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      scrollbar-width: none; // Firefox
+      -ms-overflow-style: none; // IE/Edge
     }
-
- /*   .footer {
-      width: 100%;
-      flex-shrink: 0;
-      height: 30px;
-     // background: #f5f5f5;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, .1);
-      z-index: 100;
-    }*/
   }
 }
-
-.icon {
-  font-size: 20px;
-  //color: red;
-  width: 20px;
-  height: 20px;
-}
-

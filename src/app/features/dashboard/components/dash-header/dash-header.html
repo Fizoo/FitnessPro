@@ -1,27 +1,21 @@
 <div class="header">
   <div class="header1">
-    <div class="header__box">
-      <mat-icon class="icon">schedule</mat-icon>
-    </div>
-    <div class="header__box">
-      <h2>Workouts</h2>
-    </div>
-    <div class="header__box header__box2">
-      <div class="box-icon">
-        <mat-icon class="icon">edit</mat-icon>
-      </div>
-      <div class="box-icon">
-        <mat-icon class="icon">menu</mat-icon>
-      </div>
-
-
-    </div>
+    <button class="back-btn" (click)="goBack()">
+      <i class="material-icons">schedule</i>
+    </button>
+    <h2>Workouts</h2>
+    <button class="bookmark-btn">
+      <i class="material-icons">edit</i>
+    </button>
+    <button class="filter-btn">
+      <i class="material-icons">menu</i>
+    </button>
   </div>
 
   <div class="header2">
     <button routerLink="main" matButton="outlined">Dashboard</button>
     <button routerLink="workouts" matButton="outlined">Workouts</button>
-    <button routerLink="exercises" matButton="outlined">Exercises</button>
+    <button routerLink="/exercises" matButton="outlined">Exercises</button>
 
   </div>
 </div>

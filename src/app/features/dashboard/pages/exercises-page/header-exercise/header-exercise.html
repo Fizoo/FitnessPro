@@ -1,0 +1,16 @@
+<div class="page-header">
+  <button class="back-btn" (click)="onBack()">
+    <i class="material-icons">arrow_back</i>
+  </button>
+  <h1>{{ title }}</h1>
+  @if (showBookmark) {
+    <button class="bookmark-btn" (click)="onBookmark()">
+      <i class="material-icons">{{ isBookmarked ? 'bookmark' : 'bookmark_border' }}</i>
+    </button>
+  }
+  @if (showFilter) {
+    <button class="filter-btn" (click)="onFilter()">
+      <i class="material-icons">filter_list</i>
+    </button>
+  }
+</div>

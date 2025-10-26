@@ -1,0 +1,76 @@
+<div class="exercise-detail-page">
+  <!-- Header -->
+  <div class="exercise-header">
+    <button class="back-btn" (click)="goBack()">
+      <i class="material-icons">arrow_back</i>
+    </button>
+    <h1>{{ exercise()?.bodyPart }}</h1>
+    <button class="text-btn">
+      <i class="material-icons">text_fields</i>
+    </button>
+    <button class="bookmark-btn">
+      <i class="material-icons">bookmark_border</i>
+    </button>
+    <button class="check-btn">
+      <i class="material-icons">check</i>
+    </button>
+  </div>
+
+  <div class="exercise-content">
+    <!-- Exercise Image/GIF -->
+    <div class="exercise-visual">
+      <img [src]="exercise()?.gifUrl" [alt]="exercise()?.name">
+    </div>
+
+    <!-- Exercise Name -->
+    <h2 class="exercise-name">{{ exercise()?.name }}</h2>
+
+    <!-- Exercise Description -->
+    <div class="exercise-description">
+      <p>{{ exerciseDescription() }}</p>
+    </div>
+
+    <!-- Instruction Section -->
+    <div class="instruction-section">
+      <h3>Instruction</h3>
+      <div class="instruction-list">
+        @for (instruction of exercise()?.instructions; track $index) {
+          <div class="instruction-item">
+            <span class="instruction-number">{{ $index + 1 }}</span>
+            <p>{{ instruction }}</p>
+          </div>
+        } @empty {
+          <p class="no-instructions">No instructions available</p>
+        }
+      </div>
+    </div>
+
+    <!-- Video Section -->
+    <div class="video-section">
+      <h3>How to do it correctly</h3>
+      <div class="video-list">
+        @for (video of exerciseVideos(); track video.id) {
+          <div class="video-card">
+            <div class="video-player">
+              <iframe
+                [src]="getSafeVideoUrl(video.url)"
+                [title]="video.title"
+
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div class="video-info">
+              <h4>{{ video.title }}</h4>
+              @if (video.duration) {
+                <p class="video-duration">{{ video.duration }}</p>
+              }
+            </div>
+          </div>
+        } @empty {
+          <p class="no-videos">No videos available</p>
+        }
+      </div>
+    </div>
+  </div>
+</div>
