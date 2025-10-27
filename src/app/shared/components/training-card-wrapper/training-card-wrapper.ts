@@ -16,6 +16,7 @@ export class TrainingCardWrapper {
   @Input() title: string = 'Bench';
   @Input() hasIndicator: boolean = true;
 
+
   getProgressColor(progress: number): string {
     if (progress >= 85) return '#26c6da';
     if (progress >= 75) return '#4db6ac';

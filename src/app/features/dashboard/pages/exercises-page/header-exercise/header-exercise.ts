@@ -1,6 +1,7 @@
 import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Router} from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-header-exercise',
@@ -20,10 +21,13 @@ export class HeaderExercise {
   @Output() bookmark = new EventEmitter<void>();
   @Output() filter = new EventEmitter<void>();
 
+  location=inject(Location)
+
   private router = inject(Router);
 
 
   onBack(): void {
+    this.location.back();
   this.router.navigate(['exercises'])
     if (this.back.observed) {
       this.back.emit();

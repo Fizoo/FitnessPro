@@ -1,6 +1,7 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Exercise, ExerciseCard} from '../../../../../shared/components/exercise-card/exercise-card';
+import {ExerciseService} from '../../../../../core/services/exercise-service';
 
 @Component({
   selector: 'app-exercise-list-page',
@@ -10,9 +11,12 @@ import {Exercise, ExerciseCard} from '../../../../../shared/components/exercise-
   templateUrl: './exercise-list-page.html',
   styleUrl: './exercise-list-page.scss'
 })
-export class ExerciseListPage {
+export class ExerciseListPage implements OnInit {
   private route = inject(ActivatedRoute);
+  exercisesService=inject(ExerciseService)
+  isLoading = signal(false);
 
+  exerciseList=this.exercisesService.getBodyPartList()
   exercises = signal<Exercise[]>([]);
   selectedExercises = signal<Set<string>>(new Set());
 
@@ -26,6 +30,8 @@ export class ExerciseListPage {
   }
 
   loadExercises(muscleGroup: string): void {
+    this.isLoading.set(true);
+/*    this.exercisesService.*/
     // TODO: Завантаж з API
     this.exercises.set([
       {

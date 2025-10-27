@@ -1,7 +1,7 @@
 <div class="muscle-card" (click)="onSelect()">
-  <img [src]="muscleGroup.image" [alt]="muscleGroup.name">
+  <img [src]="muscleGroup.imageUrl" [alt]="muscleGroup.name">
   <div class="muscle-card__overlay"></div>
-  <h2>{{ muscleGroup.name }}</h2>
+  <h2>{{ muscleGroup.name | uppercase}}</h2>
   @if (muscleGroup.exerciseCount) {
     <span class="exercise-count">{{ muscleGroup.exerciseCount }} exercises</span>
   }

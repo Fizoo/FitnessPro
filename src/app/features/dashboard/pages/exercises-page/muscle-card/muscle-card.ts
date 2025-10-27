@@ -1,23 +1,20 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {IMuscleGroup} from '../../../../../core/model/Exercise-model';
+import {UpperCasePipe} from '@angular/common';
 
-
-export interface MuscleGroup {
-  id: number;
-  name: string;
-  image: string;
-  exerciseCount?: number;
-}
 
 @Component({
   selector: 'app-muscle-card',
-  imports: [],
+  imports: [
+    UpperCasePipe
+  ],
   templateUrl: './muscle-card.html',
   styleUrl: './muscle-card.scss'
 })
 export class MuscleCard {
 
-  @Input({ required: true }) muscleGroup!: MuscleGroup;
-  @Output() selected = new EventEmitter<MuscleGroup>();
+  @Input({ required: true }) muscleGroup!: IMuscleGroup;
+  @Output() selected = new EventEmitter<IMuscleGroup>();
 
   onSelect(): void {
     this.selected.emit(this.muscleGroup);
