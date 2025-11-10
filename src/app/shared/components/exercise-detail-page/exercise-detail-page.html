@@ -1,10 +1,13 @@
-<div class="exercise-detail-page">
+@if(exercisesRx.value();as list){
+
+
+  <div class="exercise-detail-page">
   <!-- Header -->
   <div class="exercise-header">
     <button class="back-btn" (click)="goBack()">
       <i class="material-icons">arrow_back</i>
     </button>
-    <h1>{{ exercise()?.bodyPart }}</h1>
+    <h1>{{ list.bodyPart }}</h1>
     <button class="text-btn">
       <i class="material-icons">text_fields</i>
     </button>
@@ -19,25 +22,27 @@
   <div class="exercise-content">
     <!-- Exercise Image/GIF -->
     <div class="exercise-visual">
-      <img [src]="exercise()?.gifUrl" [alt]="exercise()?.name">
+      <img [src]="list.gifUrl" [alt]="list.name">
+
     </div>
 
     <!-- Exercise Name -->
-    <h2 class="exercise-name">{{ exercise()?.name }}</h2>
+    <h2 class="exercise-name">{{ list.name }}</h2>
 
     <!-- Exercise Description -->
-    <div class="exercise-description">
-      <p>{{ exerciseDescription() }}</p>
+    <div  class="exercise-description">
+      <p>{{list.description}}</p>
     </div>
 
     <!-- Instruction Section -->
     <div class="instruction-section">
       <h3>Instruction</h3>
       <div class="instruction-list">
-        @for (instruction of exercise()?.instructions; track $index) {
+        @for (instruction of list.instructions; track $index) {
           <div class="instruction-item">
             <span class="instruction-number">{{ $index + 1 }}</span>
             <p>{{ instruction }}</p>
+
           </div>
         } @empty {
           <p class="no-instructions">No instructions available</p>
@@ -74,3 +79,8 @@
     </div>
   </div>
 </div>
+
+
+
+
+}

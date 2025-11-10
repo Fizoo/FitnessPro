@@ -1,23 +1,62 @@
-import {Component, computed, inject, OnInit, signal} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Exercise, ExerciseCard} from '../../../../../shared/components/exercise-card/exercise-card';
+import {Component, inject, resource, signal} from '@angular/core';
+import {ExerciseCard} from '../../../../../shared/components/exercise-card/exercise-card';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Alert} from '../../../../../shared/components/alert/alert';
+import {Spinner} from '../../../../../shared/components/spinner/spinner';
 import {ExerciseService} from '../../../../../core/services/exercise-service';
+import {firstValueFrom, map} from 'rxjs';
+import {IExercise} from '../../../../../core/model/Exercise-model';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {exercisesData} from '../../../../../../../public/data/data';
+
 
 @Component({
   selector: 'app-exercise-list-page',
   imports: [
-    ExerciseCard
+    ExerciseCard,
+    Alert,
+    Spinner
+
   ],
   templateUrl: './exercise-list-page.html',
   styleUrl: './exercise-list-page.scss'
 })
-export class ExerciseListPage implements OnInit {
+export class ExerciseListPage {
   private route = inject(ActivatedRoute);
-  exercisesService=inject(ExerciseService)
+  private exercisesService = inject(ExerciseService);
+  private router = inject(Router);
+
+  selectedExercises = signal<string[]>([]);
+  list=signal(exercisesData)
+
+  // Отримуємо bodyPart з route params
+  bodyPart = toSignal(
+    this.route.paramMap.pipe(
+      map(params => params.get('muscleGroup') || 'chest')
+    )
+  );
+
+  // Resource з реактивним параметром + generic типи
+  onExercisesRecourse = resource<IExercise[],void>({
+    loader: () =>
+      firstValueFrom(this.exercisesService.getExercisesByBodyPart(this.bodyPart()!))
+  });
+
+  onExerciseSelected(exercise: IExercise): void {
+    this.router.navigate([exercise.id], { relativeTo: this.route });
+  }
+
+  isExerciseSelected(exerciseId: string): boolean {
+    return this.selectedExercises().includes(exerciseId);
+  }
+
+
+
+/*  private route = inject(ActivatedRoute);
+  exercisesService = inject(ExerciseService)
   isLoading = signal(false);
 
-  exerciseList=this.exercisesService.getBodyPartList()
-  exercises = signal<Exercise[]>([]);
+  exercises = signal<IExercise[]>([]);
   selectedExercises = signal<Set<string>>(new Set());
 
   filteredExercises = computed(() => this.exercises());
@@ -25,32 +64,22 @@ export class ExerciseListPage implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const muscleGroup = params['muscleGroup'];
-      this.loadExercises(muscleGroup);
+
     });
+    this.loadExercises();
   }
 
-  loadExercises(muscleGroup: string): void {
+  loadExercises(): void {
     this.isLoading.set(true);
-/*    this.exercisesService.*/
-    // TODO: Завантаж з API
-    this.exercises.set([
-      {
-        id: '1',
-        name: 'bench press',
-        gifUrl: 'assets/img/bench-mini.jpg',
-        bodyPart: 'chest',
-        equipment: 'dumbbell',
-        target: 'pectorals'
-      },
-      {
-        id: '2',
-        name: '30-degree incline dumbbell fly',
-        gifUrl: 'https://example.com/exercise2.gif',
-        bodyPart: 'chest',
-        equipment: 'dumbbell',
-        target: 'pectorals'
-      }
-    ]);
+
+    // В компоненті
+    this.exercisesService.getExercisesByBodyPart('back')
+      .subscribe(exercise => {
+        this.exercises.set(exercise)
+        console.log(exercise)
+      });
+
+
   }
 
   isExerciseSelected(exerciseId: string): boolean {
@@ -67,5 +96,7 @@ export class ExerciseListPage implements OnInit {
     }
 
     this.selectedExercises.set(selected);
-  }
+  }*/
+
+
 }

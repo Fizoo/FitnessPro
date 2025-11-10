@@ -1,0 +1,11 @@
+<div class="alert" [class]="'alert--' + type()">
+  <div class="alert-icon">{{ getIcon() }}</div>
+  <div class="alert-content">
+    <p class="alert-message">{{ message() }}</p>
+    @if (showAction()) {
+      <button class="alert-button" (click)="action.emit()">
+        {{ actionText() }}
+      </button>
+    }
+  </div>
+</div>

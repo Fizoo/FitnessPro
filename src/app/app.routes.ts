@@ -8,6 +8,7 @@ import {ExercisesPage} from './features/dashboard/pages/exercises-page/exercises
 import {MuscleGroupsList} from './features/dashboard/pages/exercises-page/muscle-groups-list/muscle-groups-list';
 import {ExerciseListPage} from './features/dashboard/pages/exercises-page/exercise-list-page/exercise-list-page';
 import {ExerciseDetailPage} from './shared/components/exercise-detail-page/exercise-detail-page';
+import {DataDowload} from './core/services/data-dowload/data-dowload';
 
 export const routes: Routes = [
   {path: '', component: LayoutComponent},
@@ -26,14 +27,16 @@ export const routes: Routes = [
   {
     path: 'exercises', component: ExercisesPage,
     children: [
-      {path: '', component: MuscleGroupsList},
+      {
+        path: '', component: MuscleGroupsList
+      },
       {
         path: ':muscleGroup', component: ExerciseListPage
       },
-     /* {
+      {
         path: ':muscleGroup/:exerciseId',
         component: ExerciseDetailPage
-      }*/
+      }
     ]
 
   },
@@ -41,6 +44,10 @@ export const routes: Routes = [
     path: ':exerciseId/:id',
     component: ExerciseDetailPage
   },
-  {path: '**', redirectTo: 'dashboard'},
+  /*{path: '**', redirectTo: 'dashboard'},*/
   {path: 'login', component: LoginPage},
+  {
+    path: 'download-data',
+    component: DataDowload
+  }
 ];

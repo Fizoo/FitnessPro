@@ -1,22 +1,23 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
+import {NgOptimizedImage, UpperCasePipe} from '@angular/common';
 import {IMuscleGroup} from '../../../../../core/model/Exercise-model';
-import {UpperCasePipe} from '@angular/common';
 
 
 @Component({
   selector: 'app-muscle-card',
   imports: [
-    UpperCasePipe
+    UpperCasePipe,
+    NgOptimizedImage
   ],
   templateUrl: './muscle-card.html',
   styleUrl: './muscle-card.scss'
 })
 export class MuscleCard {
 
-  @Input({ required: true }) muscleGroup!: IMuscleGroup;
-  @Output() selected = new EventEmitter<IMuscleGroup>();
+  muscleGroup = input.required<IMuscleGroup>();
+  routedTo=output<string>()
 
-  onSelect(): void {
-    this.selected.emit(this.muscleGroup);
+  onSelect() {
+    this.routedTo.emit(this.muscleGroup().name)
   }
 }

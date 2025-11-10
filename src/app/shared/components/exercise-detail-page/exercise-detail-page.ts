@@ -1,6 +1,10 @@
-import {Component, computed, inject, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {rxResource, toSignal} from '@angular/core/rxjs-interop';
+import {map} from 'rxjs';
+import {ExerciseService} from '../../../core/services/exercise-service';
+import {IExercise} from '../../../core/model/Exercise-model';
 
 
 interface Exercise {
@@ -30,43 +34,54 @@ export class ExerciseDetailPage implements OnInit{
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private sanitizer = inject(DomSanitizer);
+  private exerciseService=inject(ExerciseService)
+
+  readonly userParams = toSignal(
+    this.route.paramMap.pipe(
+      map(params => ({
+        exerciseId: params.get('exerciseId') ?? '',
+        muscleGroup: params.get('muscleGroup') ?? ''
+      }))
+    ),
+    { initialValue: { exerciseId: '', muscleGroup: '' } }
+  );
 
   exercise = signal<Exercise | null>(null);
   exerciseVideos = signal<Video[]>([]);
 
-  exerciseDescription = computed(() => {
-    const ex = this.exercise();
-    if (!ex) return '';
 
-    return ex.description || `The ${ex.name} is considered as the best basic exercise for developing the ${ex.target} muscles and increasing general strength. This exercise allows a greater amplitude of movement than the classic bar press, and allows you to work out the muscles more efficiently. In addition, stabilizing muscles are more involved here. Using this type of inclination makes it possible to minimize the work of the triceps and deltoids.`;
+  readonly exercisesRx = rxResource<IExercise, { exerciseId: string; muscleGroup: string }>({
+    params: () => this.userParams(),
+    defaultValue: {} as IExercise,
+    stream: ({ params }) =>
+      this.exerciseService.getExercisesByBodyPart(params.muscleGroup).pipe(
+        map(exercises => {
+          const exercise = exercises.find(e => e.id === params.exerciseId);
+          //if (!exercise) return {} as IExercise;
+          return exercise || {} as IExercise;
+
+        /*  return {
+          ...exercise,
+              gifUrl: this.exerciseService.getExerciseImageUrl(params.exerciseId, '180')
+          };*/
+        }),
+      )
   });
 
+
+
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+ /*   this.route.params.subscribe(params => {
+      console.log(params)
       const exerciseId = params['exerciseId'];
+      const muscleGroup = params['muscleGroup'];
       this.loadExercise(exerciseId);
       this.loadVideos(exerciseId);
-    });
+    });*/
   }
 
   loadExercise(exerciseId: string): void {
-    // TODO: Завантаж з API
-    this.exercise.set({
-      id: exerciseId,
-      name: '30-degree incline dumbbell bench press',
-      gifUrl: 'assets/img/bench-mini.jpg',
-      bodyPart: 'Chest',
-      equipment: 'dumbbell',
-      target: 'pectorals',
-      description: 'The inclined dumbbell bench press is considered as the best basic exercise for developing the pectoral muscles and increasing general strength. This exercise allows a greater amplitude of movement than the classic bar press, and allows you to work out the muscles more efficiently. In addition, stabilizing muscles are more involved here. Using this type of inclination makes it possible to minimize the work of the triceps and deltoids.',
-      instructions: [
-        'Lie on an incline bench set at 30 degrees with a dumbbell in each hand',
-        'Position the dumbbells at shoulder level with palms facing forward',
-        'Press the dumbbells up until your arms are fully extended',
-        'Lower the dumbbells slowly back to the starting position',
-        'Repeat for the desired number of repetitions'
-      ]
-    });
+
   }
 
   loadVideos(exerciseId: string): void {

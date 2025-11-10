@@ -1,12 +1,45 @@
 
-<div class="exercise-list">
-  @for (exercise of filteredExercises(); track exercise.id) {
-    <app-exercise-card
-      [exercise]="exercise"
-      [isSelected]="isExerciseSelected(exercise.id)"
-      (selected)="onExerciseSelected($event)"
-    />
-  } @empty {
-    <p class="no-results">No exercises found</p>
-  }
-</div>
+<!-- Loading state -->
+@if (onExercisesRecourse.isLoading()) {
+  <app-spinner message="Loading muscle groups..."/>
+}
+
+<!-- Error state -->
+@if (onExercisesRecourse.error(); as error) {
+  <app-alert
+    type="error"
+    [message]="error?.message || 'Помилка завантаження '"
+    [showAction]="true"
+    actionText="Спробувати знову"
+    (action)="onExercisesRecourse.reload()"
+  />
+}
+
+<!--@if (list(); as el) {
+  <div class="exercise-list">
+    @for (exercise of el ; track exercise.name) {
+      <app-exercise-card
+        [exercise]="el[0].data[0]"
+        [isSelected]="isExerciseSelected(exercise.name)"
+        (selected)="onExerciseSelected($event)"
+      />
+    } @empty {
+      <p class="no-results">No exercises found</p>
+    }
+  </div>
+}-->
+@if (onExercisesRecourse.value(); as exercises) {
+  <div class="exercise-list">
+    @for (exercise of exercises ; track exercise.id) {
+      <app-exercise-card
+        [exercise]="exercise"
+        [isSelected]="isExerciseSelected(exercise.id)"
+        (selected)="onExerciseSelected($event)"
+
+      />
+    } @empty {
+      <p class="no-results">No exercises found</p>
+    }
+  </div>
+}
+

@@ -1,11 +1,13 @@
 <div class="exercise-card" (click)="onSelect()">
   <div class="exercise-image">
-    <img [src]="exercise.gifUrl" [alt]="exercise.name">
+    <img
+      [src]="exercise().staticImageUrl || ('assets/img/' + exercise().bodyPart + '.png')"
+      [alt]="exercise().name">
   </div>
   <div class="exercise-info">
-    <h3>{{ exercise.name }}</h3>
+    <h3>{{ exercise().name }}</h3>
   </div>
-  <button class="checkbox" [class.checked]="isSelected" (click)="onCheckboxClick($event)">
-    <i class="material-icons">{{ isSelected ? 'check_box' : 'check_box_outline_blank' }}</i>
+  <button class="checkbox" [class.checked]="isSelected()" (click)="onCheckboxClick($event)">
+    <i class="material-icons">{{ isSelected() ? 'check_box' : 'check_box_outline_blank' }}</i>
   </button>
 </div>

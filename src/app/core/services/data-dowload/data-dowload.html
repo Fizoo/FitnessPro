@@ -1,0 +1,36 @@
+<div style="padding: 2rem;">
+  <h1>Data Downloader</h1>
+
+  <div style="margin: 2rem 0;">
+    <label>Body Part:
+      <input
+        [value]="bodyPart()"
+        (input)="bodyPart.set($any($event.target).value)"
+        placeholder="back, chest, legs..."
+        style="padding: 0.5rem; font-size: 1rem; margin-left: 0.5rem; width: 200px;">
+    </label>
+  </div>
+
+  <button (click)="dowload()" matButton="filled">Basic</button>
+  <img [src]="imgUrl()" alt="">
+  <button
+    (click)="loadAll()"
+    [disabled]="isLoading()"
+    style="padding: 1rem 2rem; font-size: 1rem; cursor: pointer; background: #4CAF50; color: white; border: none; border-radius: 4px;">
+    {{ isLoading() ? progress() : 'Завантажити всі' }}
+  </button>
+
+  @if (allData().length > 0) {
+    <div style="margin: 2rem 0;">
+      <h3>✅ Завантажено: {{ allData().length }} exercises</h3>
+      <pre style="background: #f5f5f5; padding: 1rem; border-radius: 8px; overflow: auto; max-height: 500px;">{{ JSON.stringify(allData(), null, 2) }}</pre>
+      <button
+        (click)="copy()"
+        style="padding: 0.5rem 1rem; cursor: pointer; margin-top: 1rem;">
+        📋 Copy JSON
+      </button>
+    </div>
+    <button (click)="dowload()" matButton="filled">Basic</button>
+
+  }
+</div>

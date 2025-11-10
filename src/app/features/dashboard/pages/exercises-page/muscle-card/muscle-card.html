@@ -1,8 +1,8 @@
 <div class="muscle-card" (click)="onSelect()">
-  <img [src]="muscleGroup.imageUrl" [alt]="muscleGroup.name">
+  <img [ngSrc]="muscleGroup().imageUrl" priority fill [alt]="muscleGroup().name">
   <div class="muscle-card__overlay"></div>
-  <h2>{{ muscleGroup.name | uppercase}}</h2>
-  @if (muscleGroup.exerciseCount) {
-    <span class="exercise-count">{{ muscleGroup.exerciseCount }} exercises</span>
+  <h2>{{ muscleGroup().name | uppercase }}</h2>
+  @if (muscleGroup().exerciseCount) {
+    <span class="exercise-count">{{ muscleGroup().exerciseCount }} exercises</span>
   }
 </div>
