@@ -1,11 +1,11 @@
 import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
-import {CommonModule} from '@angular/common';
+
 import {Router} from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-header-exercise',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './header-exercise.html',
   styleUrl: './header-exercise.scss'
 })
