@@ -9,6 +9,7 @@ import {bodyPartsData, exercisesData, IData} from '../../../../public/data/data'
   providedIn: 'root'
 })
 export class ExerciseService {
+
   private http = inject(HttpClient);
   private USE_MOCK = true;
   private mockData: IData[] = exercisesData
@@ -16,14 +17,16 @@ export class ExerciseService {
 
   private readonly API_URL = 'https://exercisedb.p.rapidapi.com';
   //private readonly API_KEY = '5807c7d9ebmshc5ef3fc8c48beffp1aa3d7jsnca03230e0da8';
-  //private readonly API_KEY2 = '0ac2f8e116msha0aeb3ff8a1fecfp1c1e3fjsn267c946a97ad';
-  private readonly API_KEY2 = '1111';
+  //private readonly API_KEY2 = '0ac2f8e116msha0aeb3ff8a1fecfp1c1e3fjsn267c946a97ad';//3.11.2025
+  private readonly API_KEY3 = '19742648b5msh0a471e2a91c926ep141541jsnb293a1b56cf0';//12.11.2025
+  //private readonly API_KEY4 = '123973abd4msh7875c02463e26a7p13f109jsn42225cb671d7';//25.11.2025
+  //private readonly API_KEY2 = '1111';
 
   private staticImageCache = new Map<string, string>();
 
   private getHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'X-RapidAPI-Key': this.API_KEY2,
+      //'X-RapidAPI-Key': this.API_KEY3,
       'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
     });
   }
@@ -37,30 +40,30 @@ export class ExerciseService {
   }
 
   getBodyPartList(): Observable<IMuscleGroup[]> {
+        if (this.USE_MOCK) {
+          // Повертаємо mock дані з затримкою (імітація API)
+          return of(this.bodyPartsData).pipe(
+            map(bodyParts =>
+              [...bodyParts].sort((a, b) => a.id - b.id)
+            ),
+            delay(500),
 
-    if (this.USE_MOCK) {
-      // Повертаємо mock дані з затримкою (імітація API)
-      return of(this.bodyPartsData).pipe(
-        map(bodyParts =>
-          [...bodyParts].sort((a, b) => a.id - b.id)
-        ),
-        delay(500),
-
-      )
-    }
+          )
+        }
 
     return this.http.get<string[]>(`${this.API_URL}/exercises/bodyPartList`, {
       headers: this.getHeaders()
     }).pipe(
-      map((bodyParts) => {
+      map((bodyParts,i) => {
         return bodyParts.map((bodyPart, i) => ({
           name: bodyPart,
           id: i,
           exerciseCount: 0,
-          imageUrl: 'assets/img/Chest.png'
+          imageUrl: `assets/img/${bodyPart}.png`
         }))
       }),
       tap(el => console.log(el))
+
     )
   }
 
@@ -69,12 +72,12 @@ export class ExerciseService {
     if (this.USE_MOCK) {
       // Повертаємо mock дані з затримкою (імітація API)
       const found = this.mockData.find(el => el.params === bodyPart);
+      console.log('getExercisesByBodyPart USE_MOCK:')
       console.log(found)
-      return of(found ? found.data : []).pipe(
 
+      return of(found ? found.data : []).pipe(
         delay(500));
     }
-
 
     return this.http.get<any[]>(`${this.API_URL}/exercises/bodyPart/${bodyPart}`, {
       headers: this.getHeaders(),
@@ -83,7 +86,7 @@ export class ExerciseService {
         offset: offset.toString()
       }
     }).pipe(
-      //tap(el=>console.log(el)),
+      tap(el => console.log(el)),
       switchMap(exercises => this.mapExercises(exercises)),
       tap(el => console.log(el))
     );
@@ -100,7 +103,23 @@ export class ExerciseService {
 
   // GET /image - Отримати GIF зображення вправи
   getExerciseImageUrl(exerciseId: string, resolution: '180' | '360' | '720' | '1080' = '180'): string {
-    return `${this.API_URL}/image?exerciseId=${exerciseId}&resolution=${resolution}&rapidapi-key=${this.API_KEY2}`;
+    return `${this.API_URL}/image?exerciseId=${exerciseId}&resolution=${resolution}&rapidapi-key=${this.API_KEY3}`
+  }
+
+
+  getExerciseImageBlob(id: string, res: '180' | '360' | '720' | '1080' = '180') {
+    const url = `${this.API_URL}/image?exerciseId=${id}&resolution=${res}`;
+    return this.http.get(url, {headers: this.getHeaders(), responseType: 'blob'});
+  }
+  // Створити Object URL з Blob (зручно для <img [src]>)
+  getExerciseImageObjectUrl$(
+    exerciseId: string,
+    resolution: '180' | '360' | '720' | '1080' = '180'
+  ) {
+    return this.getExerciseImageBlob(exerciseId, resolution).pipe(
+      map(blob => URL.createObjectURL(blob)),
+      tap(el=>console.log(el))
+    );
   }
 
   // Отримати групи м'язів з зображеннями
@@ -128,10 +147,10 @@ export class ExerciseService {
   }
 
   // Маппінг однієї вправи зі статичним зображенням
-  private mapExerciseWithStaticImage(data:IExercise): Observable<IExercise> {
+  private mapExerciseWithStaticImage(data: IExercise): Observable<IExercise> {
     const gifUrl = ''
-   // const gifUrl = data.gifUrl
-   // const gifUrl = this.getExerciseImageUrl(data.id, '180');
+    // const gifUrl = data.gifUrl
+    //const gifUrl = this.getExerciseImageUrl(data.id, '180');
 
     const baseExercise: IExercise = {
       id: data.id,
@@ -152,8 +171,8 @@ export class ExerciseService {
     return from(this.getGifFirstFrame(gifUrl)).pipe(
       map(staticImageUrl => ({
         ...baseExercise,
-        staticImageUrl: ''
-        //staticImageUrl: staticImageUrl
+        //staticImageUrl: ''
+        staticImageUrl: staticImageUrl
       })),
       catchError(() => of({
         ...baseExercise,
@@ -172,8 +191,8 @@ export class ExerciseService {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      //img.src = gifUrl;
-      img.src = '';
+      img.src = gifUrl;
+      //img.src = '';
 
       img.onload = () => {
         const canvas = document.createElement('canvas');

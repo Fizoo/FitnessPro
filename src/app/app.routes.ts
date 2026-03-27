@@ -9,6 +9,7 @@ import {MuscleGroupsList} from './features/dashboard/pages/exercises-page/muscle
 import {ExerciseListPage} from './features/dashboard/pages/exercises-page/exercise-list-page/exercise-list-page';
 import {ExerciseDetailPage} from './shared/components/exercise-detail-page/exercise-detail-page';
 import {DataDowload} from './core/services/data-dowload/data-dowload';
+import {ExerciseCardWork} from './shared/components/exercise-card-work/exercise-card-work';
 
 export const routes: Routes = [
   {path: '', component: LayoutComponent},
@@ -43,6 +44,9 @@ export const routes: Routes = [
   {
     path: ':exerciseId/:id',
     component: ExerciseDetailPage
+  }, {
+    path: 'exerciseWork',
+    component: ExerciseCardWork
   },
   /*{path: '**', redirectTo: 'dashboard'},*/
   {path: 'login', component: LoginPage},

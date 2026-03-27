@@ -1,0 +1,390 @@
+$bottom-nav-height: 56px;
+
+.exercise-detail {
+  min-height: 100vh;
+  background: #050607;
+  color: #e0e0e0;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto ;
+  gap: 1rem;
+  // header | main | history | bottom-nav
+
+  // ---------------- HEADER ----------------
+  .detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem 0.5rem;
+    background: #050607;
+
+    .btn-icon {
+      border: none;
+      background: none;
+      padding: 0.25rem;
+      cursor: pointer;
+      color: #e0f7f6;
+
+      .icon-back {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        border-left: 2px solid #5ec4c1;
+        border-bottom: 2px solid #5ec4c1;
+        transform: rotate(45deg);
+      }
+    }
+
+    .header-center {
+      text-align: center;
+
+      .header-progress {
+        font-size: 0.95rem;
+        color: #ffffff;
+      }
+    }
+
+    .header-right {
+      .header-time {
+        font-size: 0.85rem;
+        color: #7fb4ff;
+      }
+    }
+  }
+
+  // ------------- MAIN BLOCK (1fr) -------------
+  .exercise-main {
+    padding: 0 1rem 0.3rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; // щоб верх не "стрибав"
+
+    .exercise-visual {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 0.8rem 0 0.3rem;
+      flex: 0 0 auto;
+
+      img {
+        max-width: 100%;
+        min-height: 230px;
+        max-height: 455px;
+        object-fit: contain;
+      }
+    }
+
+    .exercise-info {
+      padding: 0.2rem 0 0.6rem;
+      flex: 0 0 auto;
+
+      .exercise-name {
+        margin: 0 0 0.3rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #ffffff;
+      }
+
+      .exercise-desc {
+        margin: 0;
+        font-size: 0.82rem;
+        color: #c0c0c0;
+        line-height: 1.35;
+
+        strong {
+          color: #ffffff;
+        }
+      }
+    }
+
+    // блок із трьома кругами + інпути
+    .workout-setup {
+      flex: 1 1 auto; // займає все, що залишилось між описом і Add comment
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-bottom: 0.3rem;
+
+      .setup-controls {
+        display: flex;
+       // justify-content: space-between;
+        justify-content: center;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 0.9rem;
+
+        .control-item {
+          flex: 1;
+         // max-width: 110px;
+          text-align: center;
+
+          .circle {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .circle-inner {
+            position: absolute;
+            inset: 20%;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+          }
+
+          .control-value {
+            font-size: 1.02rem;
+            font-weight: 600;
+            color: #ffffff;
+          }
+
+          .control-label {
+            margin-top: 0.35rem;
+            font-size: 0.73rem;
+            color: #a5a5a5;
+          }
+
+          &.static {
+            .circle {
+              border: 2px solid #55d9d3;
+            }
+          }
+
+          .progress-ring {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+          }
+
+          .ring-bg {
+            fill: none;
+            stroke: #101112;
+            stroke-width: 6;
+          }
+
+          .ring-fg {
+            fill: none;
+            stroke: #7ff2e7;
+            stroke-width: 6;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.2s linear;
+
+            &.sets {
+              stroke: #ff6d5a;
+            }
+          }
+        }
+
+        /* --- Розмір кіл: середнє 100%, бокові 80% --- */
+        .control-item.timer {
+          flex: 0 0 36%;   // середній круг – базовий
+        }
+
+        .control-item.static,
+        .control-item.sets {
+          flex: 0 0 25%;   // ~20% менше ширини
+        }
+      }
+
+
+      // інпути + плюс
+      .inputs-row {
+        display: grid;
+        grid-template-columns: 1.2fr 1.2fr 0.5fr;
+        //grid-template-columns: 1fr 1fr 0.5fr;
+        gap: 0.7rem;
+        align-items: end;
+
+        $tile-height: 52px;
+
+        .input-tile {
+          background: #111214;
+          border-radius: 12px;
+          padding: 0.35rem 0.75rem 0.35rem;
+          border: 1px solid #22252a;
+          height: $tile-height;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          label {
+            font-size: 0.75rem;
+            color: #b5b5b5;
+          }
+
+          input {
+            width: 100%;
+            height: 22px;
+            border: none;
+            background: transparent;
+            color: #f5f5f5;
+            font-size: 0.95rem;
+            outline: none;
+            padding: 0;
+            margin-top: 0.1rem;
+          }
+        }
+
+        .btn-plus {
+          border: none;
+          border-radius: 12px;
+          background: #3dd5c9;
+          color: #020304;
+          width: $tile-height;
+          height: $tile-height;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          box-shadow: 0 0 14px rgba(61, 213, 201, 0.7);
+          transition: background 0.15s, transform 0.1s;
+
+          .icon-plus {
+            font-size: 1.6rem;
+            font-weight: 600;
+            line-height: 1;
+          }
+
+          &:hover {
+            background: #32c0b5;
+          }
+
+          &:active {
+            transform: scale(0.96);
+          }
+        }
+      }
+    }
+
+    .comment-section {
+      flex: 0 0 auto;
+      padding: 0.15rem 0 0.4rem;
+
+      .add-comment-btn {
+        border: none;
+        background: none;
+        padding: 0;
+        color: #5ec4c1;
+        font-size: 0.85rem;
+        cursor: pointer;
+      }
+    }
+  }
+
+  // ------------- HISTORY (авто, під основним блоком) -------------
+  .history-section {
+    padding: 0.8rem 1rem 1rem;
+    border-top: 1px solid #151618;
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+
+      .section-title {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #9a9a9a;
+        margin: 0;
+        letter-spacing: 0.04em;
+      }
+
+      .chart-link {
+        border: none;
+        background: none;
+        color: #5ec4c1;
+        font-size: 0.85rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        cursor: pointer;
+
+        .icon-arrow-right {
+          display: inline-block;
+          width: 7px;
+          height: 7px;
+          border-right: 2px solid #5ec4c1;
+          border-bottom: 2px solid #5ec4c1;
+          transform: rotate(-45deg);
+          margin-top: 1px;
+        }
+      }
+    }
+
+    .history-list {
+      margin-bottom: 1rem;
+
+      .history-date {
+        font-size: 0.9rem;
+        color: #f5f5f5;
+        margin-bottom: 0.4rem;
+      }
+
+      .history-item {
+        display: flex;
+        align-items: center;
+        padding: 0.55rem 0;
+        border-bottom: 1px solid #17181a;
+
+        .set-number {
+          width: 32px;
+          font-size: 0.8rem;
+          color: #9a9a9a;
+        }
+
+        .set-details {
+          flex: 1;
+          font-size: 0.9rem;
+          color: #e0e0e0;
+        }
+
+        .set-time {
+          font-size: 0.8rem;
+          color: #9a9a9a;
+        }
+      }
+    }
+  }
+
+  // ------------- BOTTOM NAV (останній рядок grid) -------------
+  .bottom-nav {
+    height: $bottom-nav-height;
+    display: flex;
+    background: #050607;
+    border-top: 1px solid #151618;
+
+    .nav-item {
+      flex: 1;
+      text-decoration: none;
+      color: #888;
+      font-size: 0.7rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.15rem;
+
+      .icon-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #444;
+      }
+
+      &.active {
+        color: #5ec4c1;
+
+        .icon-dot {
+          background: #5ec4c1;
+        }
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-@if(exercisesRx.value();as list){
+@if(exercisesRx.value() ;as list){
 
 
   <div class="exercise-detail-page">
@@ -14,7 +14,7 @@
     <button class="bookmark-btn">
       <i class="material-icons">bookmark_border</i>
     </button>
-    <button class="check-btn">
+    <button (click)="onClick(list)" class="check-btn">
       <i class="material-icons">check</i>
     </button>
   </div>
@@ -22,9 +22,28 @@
   <div class="exercise-content">
     <!-- Exercise Image/GIF -->
     <div class="exercise-visual">
-      <img [src]="list.gifUrl" [alt]="list.name">
 
+      @if(imgSrc()){
+        <div class="exercise-visual">
+          <img  [src]="imgSrc()!" alt="exercise">
+        </div>
+      }
+   <!--   <img [src]="list?.gifUrl" [alt]="list.gifUrl">-->
     </div>
+
+  <!--  @if(imgSrc()){
+      <h5>imgSrc</h5>
+      <div class="exercise-visual">
+      <img  [src]="imgSrc()!" alt="exercise">
+      </div>
+    }
+      @else {
+        <div class="exercise-visual">
+          <h5>gifUrl</h5>
+        <img [src]="list?.gifUrl" [alt]="list.name">
+        </div>
+      }-->
+
 
     <!-- Exercise Name -->
     <h2 class="exercise-name">{{ list.name }}</h2>
