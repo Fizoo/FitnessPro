@@ -37,7 +37,9 @@
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "axios": "^1.13.6",
     "express": "^5.1.0",
+    "node-fetch": "^3.3.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

@@ -1,21 +1,6 @@
-<!-- Loading state -->
-@if (onMuscleGroupsResource.isLoading()) {
-  <app-spinner message="Loading muscle groups..."/>
-}
-
-<!-- Error state -->
-@if (onMuscleGroupsResource.error(); as error) {
-  <app-alert
-    type="error"
-    [message]="error?.message || 'Помилка завантаження груп м\'язів'"
-    [showAction]="true"
-    actionText="Спробувати знову"
-    (action)="onMuscleGroupsResource.reload()"
-  />
-}
 
 <!-- Success state -->
-@if (onMuscleGroupsResource.value(); as groups) {
+@if (data(); as groups) {
   <div class="muscle-groups">
     @for (group of groups; track group.id) {
       <app-muscle-card

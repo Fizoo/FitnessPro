@@ -1,16 +1,13 @@
-@if(exercisesRx.value() ;as list){
 
-
+@if(list() ;as list){
   <div class="exercise-detail-page">
   <!-- Header -->
   <div class="exercise-header">
     <button class="back-btn" (click)="goBack()">
       <i class="material-icons">arrow_back</i>
     </button>
-    <h1>{{ list.bodyPart }}</h1>
-    <button class="text-btn">
-      <i class="material-icons">text_fields</i>
-    </button>
+    <h1>{{ list.name }}</h1>
+
     <button class="bookmark-btn">
       <i class="material-icons">bookmark_border</i>
     </button>
@@ -21,29 +18,11 @@
 
   <div class="exercise-content">
     <!-- Exercise Image/GIF -->
-    <div class="exercise-visual">
+    <div class="exercise-visual" >
 
-      @if(imgSrc()){
-        <div class="exercise-visual">
-          <img  [src]="imgSrc()!" alt="exercise">
-        </div>
-      }
-   <!--   <img [src]="list?.gifUrl" [alt]="list.gifUrl">-->
+      <img  [src]="'assets/gifs/exercise_' + list.id + '.gif'" alt="" loading="eager" >
+
     </div>
-
-  <!--  @if(imgSrc()){
-      <h5>imgSrc</h5>
-      <div class="exercise-visual">
-      <img  [src]="imgSrc()!" alt="exercise">
-      </div>
-    }
-      @else {
-        <div class="exercise-visual">
-          <h5>gifUrl</h5>
-        <img [src]="list?.gifUrl" [alt]="list.name">
-        </div>
-      }-->
-
 
     <!-- Exercise Name -->
     <h2 class="exercise-name">{{ list.name }}</h2>
@@ -98,8 +77,4 @@
     </div>
   </div>
 </div>
-
-
-
-
 }

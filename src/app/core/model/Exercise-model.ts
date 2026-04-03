@@ -2,7 +2,7 @@ export interface IExercise {
   id: string;
   name: string;
   gifUrl: string;
-  staticImageUrl: string;
+  staticImageUrl?: string;
   bodyPart: string;
   target: string;
   equipment: string;
@@ -11,6 +11,9 @@ export interface IExercise {
   description: string;
   difficulty: Difficulty;
   category: Category;
+  isFavorite: boolean,
+  personalRecord: number|  null,
+  history: string[]
 }
 
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced';

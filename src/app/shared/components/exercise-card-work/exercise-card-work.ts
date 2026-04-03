@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
   selector: 'app-exercise-card-work',
   imports: [],
   templateUrl: './exercise-card-work.html',
+  standalone: true,
   styleUrl: './exercise-card-work.scss'
 })
 export class ExerciseCardWork {

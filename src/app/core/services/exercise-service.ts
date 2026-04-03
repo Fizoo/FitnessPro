@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError, delay, forkJoin, from, map, Observable, of, switchMap, tap} from 'rxjs';
+import {delay, map, Observable, of, tap} from 'rxjs';
 import {IExercise, IMuscleGroup} from '../model/Exercise-model';
 import {bodyPartsData, exercisesData, IData} from '../../../../public/data/data';
 
@@ -73,7 +73,7 @@ export class ExerciseService {
       // Повертаємо mock дані з затримкою (імітація API)
       const found = this.mockData.find(el => el.params === bodyPart);
       console.log('getExercisesByBodyPart USE_MOCK:')
-      console.log(found)
+      //console.log(found)
 
       return of(found ? found.data : []).pipe(
         delay(500));
@@ -87,7 +87,7 @@ export class ExerciseService {
       }
     }).pipe(
       tap(el => console.log(el)),
-      switchMap(exercises => this.mapExercises(exercises)),
+      /*switchMap(exercises => this.mapExercises(exercises)),*/
       tap(el => console.log(el))
     );
   }
@@ -97,7 +97,7 @@ export class ExerciseService {
     return this.http.get<any>(`${this.API_URL}/exercises/exercise/${id}`, {
       headers: this.getHeaders()
     }).pipe(
-      switchMap(ex => this.mapExerciseWithStaticImage(ex))
+     /* switchMap(ex => this.mapExerciseWithStaticImage(ex))*/
     );
   }
 
@@ -137,17 +137,17 @@ export class ExerciseService {
 
   // ==================== ПРИВАТНІ МЕТОДИ ====================
   // Маппінг масиву вправ зі статичними зображеннями
-  private mapExercises(exercises: any[]): Observable<IExercise[]> {
+/*  private mapExercises(exercises: any[]): Observable<IExercise[]> {
     if (exercises.length === 0) {
       return of([]);
     }
 
     const mappedExercises = exercises.map(ex => this.mapExerciseWithStaticImage(ex));
     return forkJoin(mappedExercises);
-  }
+  }*/
 
   // Маппінг однієї вправи зі статичним зображенням
-  private mapExerciseWithStaticImage(data: IExercise): Observable<IExercise> {
+/*  private mapExerciseWithStaticImage(data: IExercise): Observable<IExercise> {
     const gifUrl = ''
     // const gifUrl = data.gifUrl
     //const gifUrl = this.getExerciseImageUrl(data.id, '180');
@@ -179,7 +179,7 @@ export class ExerciseService {
         staticImageUrl: gifUrl // Fallback до GIF
       }))
     );
-  }
+  }*/
 
   // Отримати перший кадр з GIF
   private getGifFirstFrame(gifUrl: string): Promise<string> {

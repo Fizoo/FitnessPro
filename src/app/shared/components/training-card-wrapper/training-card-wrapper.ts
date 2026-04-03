@@ -3,12 +3,13 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 
 @Component({
-  selector: 'app-training-card-wrapper',
-  imports: [
-    MatProgressSpinner
-  ],
-  templateUrl: './training-card-wrapper.html',
-  styleUrl: './training-card-wrapper.scss'
+    selector: 'app-training-card-wrapper',
+    imports: [
+        MatProgressSpinner
+    ],
+    templateUrl: './training-card-wrapper.html',
+    standalone: true,
+    styleUrl: './training-card-wrapper.scss'
 })
 export class TrainingCardWrapper {
   @Input() progress: number = 90;

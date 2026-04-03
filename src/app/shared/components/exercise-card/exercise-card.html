@@ -1,8 +1,7 @@
 <div class="exercise-card" (click)="onSelect()">
   <div class="exercise-image">
-    <img
-      [src]="exercise().staticImageUrl || ('assets/img/' + exercise().bodyPart + '.png')"
-      [alt]="exercise().name">
+    <img staticGif [src]="'assets/gifs/exercise_' + exercise().id + '.gif'"  width="60" height="60" alt="">
+      <!--  <img [src]="exercise().staticImageUrl || ('assets/img/' + exercise().bodyPart + '.png')" [alt]="exercise().name">-->
   </div>
   <div class="exercise-info">
     <h3>{{ exercise().name }}</h3>

@@ -28,30 +28,19 @@ export const routes: Routes = [
   {
     path: 'exercises', component: ExercisesPage,
     children: [
-      {
-        path: '', component: MuscleGroupsList
-      },
-      {
-        path: ':muscleGroup', component: ExerciseListPage
-      },
-      {
-        path: ':muscleGroup/:exerciseId',
-        component: ExerciseDetailPage
-      }
+      { path: '', component: MuscleGroupsList},
+      {path: ':muscleGroup', component: ExerciseListPage},
+      { path: ':muscleGroup/:exerciseId', component: ExerciseDetailPage}
     ]
-
   },
   {
-    path: ':exerciseId/:id',
-    component: ExerciseDetailPage
+    path: ':exerciseId/:id', component: ExerciseDetailPage
   }, {
-    path: 'exerciseWork',
-    component: ExerciseCardWork
+    path: 'exerciseWork', component: ExerciseCardWork
   },
   /*{path: '**', redirectTo: 'dashboard'},*/
   {path: 'login', component: LoginPage},
   {
-    path: 'download-data',
-    component: DataDowload
+    path: 'download-data', component: DataDowload
   }
 ];

@@ -4,13 +4,14 @@ import {IMuscleGroup} from '../../../../../core/model/Exercise-model';
 
 
 @Component({
-  selector: 'app-muscle-card',
-  imports: [
-    UpperCasePipe,
-    NgOptimizedImage
-  ],
-  templateUrl: './muscle-card.html',
-  styleUrl: './muscle-card.scss'
+    selector: 'app-muscle-card',
+    imports: [
+        UpperCasePipe,
+        NgOptimizedImage
+    ],
+    templateUrl: './muscle-card.html',
+    standalone: true,
+    styleUrl: './muscle-card.scss'
 })
 export class MuscleCard {
 

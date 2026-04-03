@@ -1,13 +1,16 @@
 import {Component, input, output} from '@angular/core';
 import {IExercise} from '../../../core/model/Exercise-model';
+import {StaticGif} from '../../directives/static-gif';
 
 
 @Component({
   selector: 'app-exercise-card',
   imports: [
+    StaticGif
 
   ],
   templateUrl: './exercise-card.html',
+  standalone: true,
   styleUrl: './exercise-card.scss'
 })
 export class ExerciseCard {
@@ -16,6 +19,8 @@ export class ExerciseCard {
 
   selected = output<IExercise>();
   checkboxToggled = output<{ exercise: IExercise; selected: boolean }>();
+
+
 
   onSelect(): void {
 

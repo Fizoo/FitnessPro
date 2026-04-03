@@ -15,6 +15,7 @@ import {MatIcon} from '@angular/material/icon';
 
   ],
   templateUrl: './workouts-page.html',
+  standalone: true,
   styleUrl: './workouts-page.scss'
 })
 export class WorkoutsPage {

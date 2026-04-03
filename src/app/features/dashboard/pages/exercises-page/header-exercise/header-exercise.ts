@@ -4,10 +4,11 @@ import {Router} from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-header-exercise',
-  imports: [],
-  templateUrl: './header-exercise.html',
-  styleUrl: './header-exercise.scss'
+    selector: 'app-header-exercise',
+    imports: [],
+    templateUrl: './header-exercise.html',
+    standalone: true,
+    styleUrl: './header-exercise.scss'
 })
 export class HeaderExercise {
 

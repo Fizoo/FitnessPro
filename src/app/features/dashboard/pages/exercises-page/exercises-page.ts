@@ -11,6 +11,7 @@ import {HeaderExercise} from './header-exercise/header-exercise';
     RouterOutlet
   ],
   templateUrl: './exercises-page.html',
+  standalone: true,
   styleUrl: './exercises-page.scss'
 })
 export class ExercisesPage {

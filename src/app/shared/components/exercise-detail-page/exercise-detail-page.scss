@@ -4,6 +4,7 @@
   overflow: hidden;
 }
 
+
 .exercise-detail-page {
   display: flex;
   flex-direction: column;
@@ -80,6 +81,7 @@
       justify-content: center;
 
       img {
+        image-rendering: smooth;
         width: 100%;
         height: 100%;
         object-fit: contain;
@@ -225,3 +227,4 @@
     }
   }
 }
+

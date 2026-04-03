@@ -4,6 +4,7 @@ import {NextTrainingPage} from './components/next-training-page/next-training-pa
 
 @Component({
   selector: 'app-dashboard-main-page',
+  standalone: true,
   imports: [
     MyProgramPage,
     NextTrainingPage
@@ -12,6 +13,5 @@ import {NextTrainingPage} from './components/next-training-page/next-training-pa
   styleUrl: './dashboard-main-page.scss'
 })
 export class DashboardMainPage {
-
   workoutsNumber: number=0
 }
