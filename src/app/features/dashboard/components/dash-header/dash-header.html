@@ -1,21 +1,20 @@
 <div class="header">
   <div class="header1">
-    <button class="back-btn" (click)="goBack()">
-      <i class="material-icons">schedule</i>
-    </button>
-    <h2>Workouts</h2>
-    <button class="bookmark-btn">
-      <i class="material-icons">edit</i>
-    </button>
-    <button class="filter-btn">
+    <button class="icon-btn">
       <i class="material-icons">menu</i>
     </button>
+
+    <img src="../assets/img/logo.png" alt="logo" class="logo" />
+
+    <button class="icon-btn">
+      <i class="material-icons">edit</i>
+    </button>
+    <app-user-avatar-component></app-user-avatar-component>
   </div>
 
-  <div class="header2">
-    <button routerLink="main" matButton="outlined">Dashboard</button>
-    <button routerLink="workouts" matButton="outlined">Workouts</button>
-    <button routerLink="/exercises" matButton="outlined">Exercises</button>
-
-  </div>
+  <nav class="header2">
+    <a routerLink="main" routerLinkActive="active" class="nav-tab">Dashboard</a>
+    <a routerLink="workouts" routerLinkActive="active" class="nav-tab">Workouts</a>
+    <a routerLink="/exercises" routerLinkActive="active" class="nav-tab">Exercises</a>
+  </nav>
 </div>

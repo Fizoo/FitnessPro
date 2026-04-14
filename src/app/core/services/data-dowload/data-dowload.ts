@@ -1,5 +1,5 @@
 import {Component, inject, signal} from '@angular/core';
-import {ExerciseService} from '../exercise-service';
+import {ExerciseServiceOld} from '../exercise-service-old';
 import {firstValueFrom} from 'rxjs';
 import {MatButton} from '@angular/material/button';
 
@@ -14,7 +14,7 @@ import {MatButton} from '@angular/material/button';
 })
 export class DataDowload {
 
-  private exerciseService = inject(ExerciseService);
+  private exerciseService = inject(ExerciseServiceOld);
 
   bodyPart = signal('back');
   imgUrl = signal('');

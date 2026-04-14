@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {map} from 'rxjs';
-import {exercisesData} from '../../../../../public/data/data';
+import {exercisesData} from '../../../../../../public/data/data';
 
 interface Video {
   id: string;

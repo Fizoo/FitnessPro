@@ -1,3 +1,3 @@
 @for (el of [1,2,3] ; track el) {
-  <app-training-card-wrapper></app-training-card-wrapper>
+  <app-training-card-wrapper  [routerLink]="['/workout-day', el]"></app-training-card-wrapper>
 }

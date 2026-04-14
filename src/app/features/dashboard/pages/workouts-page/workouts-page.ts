@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MyProgramPage} from '../dashboard-main-page/components/my-program-page/my-program-page';
-import {TrainingCardWrapper} from '../../../../shared/components/training-card-wrapper/training-card-wrapper';
+import {TrainingCardWrapper} from '../../../workouts/pages/training-card-wrapper/training-card-wrapper';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -19,5 +20,9 @@ import {MatIcon} from '@angular/material/icon';
   styleUrl: './workouts-page.scss'
 })
 export class WorkoutsPage {
+  router=inject(Router)
 
+  protected openDay(dayId: number) {
+    this.router.navigate(['workout-day', dayId]);
+  }
 }

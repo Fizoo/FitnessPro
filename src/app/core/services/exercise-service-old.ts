@@ -8,7 +8,7 @@ import {bodyPartsData, exercisesData, IData} from '../../../../public/data/data'
 @Injectable({
   providedIn: 'root'
 })
-export class ExerciseService {
+export class ExerciseServiceOld {
 
   private http = inject(HttpClient);
   private USE_MOCK = true;
@@ -401,7 +401,7 @@ export interface MuscleGroup {
 @Injectable({
   providedIn: 'root'
 })
-export class ExerciseService {
+export class ExerciseServiceOld {
   private http = inject(HttpClient);
 
   private readonly API_URL = 'https://exercisedb.p.rapidapi.com';

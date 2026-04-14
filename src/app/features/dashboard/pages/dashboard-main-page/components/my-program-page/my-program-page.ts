@@ -9,4 +9,5 @@ import {Component, Input} from '@angular/core';
 })
 export class MyProgramPage {
  @Input() numb: number=0
+
 }

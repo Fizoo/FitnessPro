@@ -1,6 +1,6 @@
 import {Component, input, output} from '@angular/core';
 import {NgOptimizedImage, UpperCasePipe} from '@angular/common';
-import {IMuscleGroup} from '../../../../../core/model/Exercise-model';
+import {IMuscleGroup} from '../../../../core/model/Exercise-model';
 
 
 @Component({

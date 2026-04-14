@@ -1,6 +1,6 @@
 import {Component, input, output} from '@angular/core';
-import {IExercise} from '../../../core/model/Exercise-model';
-import {StaticGif} from '../../directives/static-gif';
+import {IExercise} from '../../../../core/model/Exercise-model';
+import {StaticGif} from '../../../../shared/directives/static-gif';
 
 
 @Component({

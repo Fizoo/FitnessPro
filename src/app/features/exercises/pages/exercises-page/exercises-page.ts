@@ -1,7 +1,7 @@
 import {Component, signal} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {FormsModule} from '@angular/forms';
-import {HeaderExercise} from './header-exercise/header-exercise';
+import {HeaderExercise} from '../../components/header-exercise/header-exercise';
 
 @Component({
   selector: 'app-exercises-page',

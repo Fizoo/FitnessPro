@@ -1,26 +1,25 @@
 import {Component, inject, signal} from '@angular/core';
-import {MatIcon} from '@angular/material/icon';
 import {faFacebook, faGithub, faGoogle} from '@fortawesome/free-brands-svg-icons';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {faEnvelope, faLock, faUser} from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 
+import {Router} from '@angular/router';
+import {AuthStore} from '../../../../core/store/auth.store';
+
+
 @Component({
   selector: 'app-login-page',
-  imports: [
-    MatIcon,
-    FaIconComponent,
-    ReactiveFormsModule
-  ],
+  imports: [FaIconComponent, ReactiveFormsModule],
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss'
 })
 export class LoginPage {
-  fb=inject(FormBuilder)
+  private fb = inject(FormBuilder);
+  protected auth = inject(AuthStore);
+  private router = inject(Router);
 
-  hide = signal<boolean >(true);
-  isActiveClass = signal<boolean>(false);
-
+  isActiveClass = signal(false);
 
   faGoogle = faGoogle;
   faFacebook = faFacebook;
@@ -29,57 +28,84 @@ export class LoginPage {
   faLock = faLock;
   faEnvelope = faEnvelope;
 
-
   loginForm = this.fb.group({
-    username: ['', [Validators.required, Validators.minLength(3)]],
-    password: ['', [Validators.required, Validators.minLength(6)]]
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
   registerForm = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [
-      Validators.required,
-      Validators.minLength(6)
-    ]]
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
-
-
-  onRegister() {
-    console.log(this.registerForm.value)
+  async onLogin(): Promise<void> {
+    if (this.loginForm.invalid) return;
+    const { email, password } = this.loginForm.value;
+    await this.auth.login(email!, password!);
+    if (this.auth.status() === 'success') {
+      this.router.navigate(['/dashboard']);
+    }
   }
 
-  onLogin() {
-
-    console.log(this.loginForm.value)
+  async onRegister(): Promise<void> {
+    if (this.registerForm.invalid) return;
+    const { email, password, username } = this.registerForm.value;
+    await this.auth.register(email!, password!, username!);
+    if (this.auth.status() === 'success') {
+      this.router.navigate(['/dashboard']);
+    }
   }
 
-  showRegister() {
-    this.isActiveClass.set(true)
+  async onGoogle(): Promise<void> {
+    await this.auth.loginWithGoogle();
+    if (!this.auth.error()) this.router.navigate(['/dashboard']);
+
   }
 
-  showLogin() {
-    this.isActiveClass.set(false)
+  async onFacebook(): Promise<void> {
+    await this.auth.loginWithFacebook();
+    if (!this.auth.error()) this.router.navigate(['/dashboard']);
   }
 
-  get username() {
-    return this.loginForm.get('username');
+  async onGitHub(): Promise<void> {
+
+   /* await this.auth.loginWithGitHub();
+    if (!this.auth.error()) this.router.navigate(['/dashboard']);*/
   }
 
-  get password() {
+  async onLogout(): Promise<void> {
+    await this.auth.logout();
+    this.router.navigate(['/login']);
+  }
+
+  showRegister(): void {
+    this.isActiveClass.set(true);
+  }
+
+  showLogin(): void {
+    this.isActiveClass.set(false);
+  }
+
+  // Login form getters
+  get loginEmail() {
+    return this.loginForm.get('email');
+  }
+
+  get loginPassword() {
     return this.loginForm.get('password');
   }
 
-  get username2() {
+  // Register form getters
+  get regUsername() {
     return this.registerForm.get('username');
   }
 
-  get password2() {
-    return this.registerForm.get('password');
+  get regEmail() {
+    return this.registerForm.get('email');
   }
 
-  get email() {
-    return this.registerForm.controls['email']
+  get regPassword() {
+    return this.registerForm.get('password');
   }
 }

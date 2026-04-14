@@ -1,132 +1,105 @@
-<div class="container"
-     [class.active]="isActiveClass()"
->
 
-  <!-- ================LOGIN================-->
- <div class="form-box login">
-   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-     <h1>Login</h1>
 
-     <div class="input-box">
-       <input formControlName="username" type="text" placeholder="Username" required>
-       @if (username?.invalid && username?.touched) {
-         <span class="error-message">
-       @if (username?.errors?.['required']) {
-         Username is required
-       }
-           @if (username?.errors?.['minlength']) {
-             Username must be at least 3 characters
-           }
-     </span>
-       }
-        <fa-icon class="icon" [icon]="faUser"></fa-icon>
+<div class="container" [class.active]="isActiveClass()">
+
+  <!-- ================LOGIN================ -->
+  <div class="form-box login">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <h1>Login</h1>
+
+      <div class="input-box">
+        <input formControlName="email" type="email" placeholder="Email">
+        @if (loginEmail?.invalid && loginEmail?.touched) {
+          <span class="error-message">
+            @if (loginEmail?.errors?.['required']) { Email is required }
+            @if (loginEmail?.errors?.['email']) { Invalid email format }
+          </span>
+        }
+        <fa-icon class="icon" [icon]="faEnvelope"></fa-icon>
       </div>
 
       <div class="input-box">
-        <input formControlName="password" type="password" placeholder="Password" required>
-        @if (password?.invalid && password?.touched) {
+        <input formControlName="password" type="password" placeholder="Password">
+        @if (loginPassword?.invalid && loginPassword?.touched) {
           <span class="error-message">
-        @if (password?.errors?.['required']) {
-          Password is required
-        }
-            @if (password?.errors?.['minlength']) {
-              Password must be at least 6 characters
-            }
-      </span>
+            @if (loginPassword?.errors?.['required']) { Password is required }
+            @if (loginPassword?.errors?.['minlength']) { Min 6 characters }
+          </span>
         }
         <fa-icon class="icon" [icon]="faLock"></fa-icon>
       </div>
 
-      <div class="forgot-link">
-        <a href="">Forgot password?</a>
-      </div>
+      <div class="forgot-link"><a href="">Forgot password?</a></div>
 
-      <button type="submit" [disabled]="loginForm.invalid" class="btn">Login</button>
+      @if (auth.error()) {
+        <span class="error-message">{{ auth.error() }}</span>
+      }
+
+      <button type="submit" [disabled]="loginForm.invalid || auth.isLoading()" class="btn">
+        {{ auth.isLoading() ? 'Loading...' : 'Login' }}
+      </button>
+
       <p>or login with social platforms</p>
-
       <div class="social-icons">
-        <a href="">
-          <fa-icon [icon]="faGoogle"></fa-icon>
-        </a>
-        <a href="">
-          <fa-icon [icon]="faFacebook"></fa-icon>
-        </a>
-        <a href="">
-          <fa-icon [icon]="faGithub"></fa-icon>
-
-        </a>
+        <a (click)="onGoogle()"><fa-icon [icon]="faGoogle"></fa-icon></a>
+        <a (click)="onFacebook()"><fa-icon [icon]="faFacebook"></fa-icon></a>
+        <a (click)="onLogout()"><fa-icon [icon]="faGithub"></fa-icon></a>
       </div>
-
     </form>
   </div>
 
-  <!-- ================REGISTER================-->
+  <!-- ================REGISTER================ -->
   <div class="form-box register">
     <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
       <h1>Registration</h1>
 
       <div class="input-box">
-        <input formControlName="username" type="text" placeholder="Username" required>
-        @if (username2?.invalid && username2?.touched) {
+        <input formControlName="username" type="text" placeholder="Username">
+        @if (regUsername?.invalid && regUsername?.touched) {
           <span class="error-message">
-        @if (username2?.errors?.['required']) {
-          Username is required
-        }
-            @if (username2?.errors?.['minlength']) {
-              Username must be at least 3 characters
-            }
-      </span>
+            @if (regUsername?.errors?.['required']) { Username is required }
+            @if (regUsername?.errors?.['minlength']) { Min 3 characters }
+          </span>
         }
         <fa-icon class="icon" [icon]="faUser"></fa-icon>
       </div>
 
       <div class="input-box">
-        <input formControlName="email" type="text" placeholder="Email" required>
-        @if (email.invalid && email.touched) {
+        <input formControlName="email" type="email" placeholder="Email">
+        @if (regEmail?.invalid && regEmail?.touched) {
           <span class="error-message">
-             @if (email.errors?.['required']) {
-                Email is required
-             }
-                   @if (email.errors?.['email']) {
-              Please enter a valid email address
-                  }
-  </span>
+            @if (regEmail?.errors?.['required']) { Email is required }
+            @if (regEmail?.errors?.['email']) { Invalid email format }
+          </span>
         }
         <fa-icon class="icon" [icon]="faEnvelope"></fa-icon>
-        <mat-icon class="icon" aria-hidden="false">person</mat-icon>
       </div>
 
       <div class="input-box">
-        <input formControlName="password" type="password" placeholder="Password" required>
-        @if (password2?.invalid && password2?.touched) {
+        <input formControlName="password" type="password" placeholder="Password">
+        @if (regPassword?.invalid && regPassword?.touched) {
           <span class="error-message">
-        @if (password2?.errors?.['required']) {
-          Password is required
-        }
-            @if (password2?.errors?.['minlength']) {
-              Password must be at least 6 characters
-            }
-      </span>
+            @if (regPassword?.errors?.['required']) { Password is required }
+            @if (regPassword?.errors?.['minlength']) { Min 6 characters }
+          </span>
         }
         <fa-icon class="icon" [icon]="faLock"></fa-icon>
       </div>
 
-      <button [disabled]="registerForm.invalid" type="submit" class="btn">Register</button>
+      @if (auth.error()) {
+        <span class="error-message">{{ auth.error() }}</span>
+      }
+
+      <button type="submit" [disabled]="registerForm.invalid || auth.isLoading()" class="btn">
+        {{ auth.isLoading() ? 'Loading...' : 'Register' }}
+      </button>
+
       <p>or register with social platforms</p>
-
       <div class="social-icons">
-        <a href="">
-          <fa-icon [icon]="faGoogle"></fa-icon>
-        </a>
-        <a href="">
-          <fa-icon [icon]="faFacebook"></fa-icon>
-        </a>
-        <a href="">
-          <fa-icon [icon]="faGithub"></fa-icon>
-
-        </a>
+        <a (click)="onGoogle()"><fa-icon [icon]="faGoogle"></fa-icon></a>
+        <a (click)="onFacebook()"><fa-icon [icon]="faFacebook"></fa-icon></a>
+        <a (click)="onGitHub()"><fa-icon [icon]="faGithub"></fa-icon></a>
       </div>
-
     </form>
   </div>
 

@@ -1,7 +1,7 @@
 import {Component, inject, signal} from '@angular/core';
 import {Router} from '@angular/router';
-import {MuscleCard} from '../muscle-card/muscle-card';
-import {exercisesData} from '../../../../../../../public/data/data';
+import {MuscleCard} from '../../components/muscle-card/muscle-card';
+import {exercisesData} from '../../../../../../public/data/data';
 
 
 @Component({

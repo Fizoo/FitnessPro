@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
-import {MatButton} from "@angular/material/button";
-import {RouterLink} from '@angular/router';
+import {RouterLink, RouterLinkActive} from '@angular/router';
+import {UserAvatarComponent} from '../../../../shared/components/user-avatar-component/user-avatar-component';
 
 @Component({
   selector: 'app-dash-header',
   imports: [
-    MatButton,
-
-    RouterLink
+    RouterLink,
+    RouterLinkActive,
+    UserAvatarComponent
   ],
   templateUrl: './dash-header.html',
   styleUrl: './dash-header.scss'

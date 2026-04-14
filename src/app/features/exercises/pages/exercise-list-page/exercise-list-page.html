@@ -1,0 +1,52 @@
+<div class="exercise-list">
+
+  @if (store.isLoading()) {
+    <div class="skeleton-grid">
+      @for (i of [1,2,3,4,5,6,7,8]; track i) {
+        <div class="skeleton-card"></div>
+      }
+    </div>
+  }
+
+  @if (store.isEmpty()) {
+    <p class="no-results">Вправи не знайдено</p>
+  }
+
+  <div class="exercise-grid">
+    @for (exercise of store.exercises(); track exercise.id) {
+      <app-exercise-card
+        [exercise]="exercise"
+        (selected)="onExerciseSelected($event)"
+      />
+    }
+  </div>
+
+  @if (!store.isLoading()) {
+    <div #sentinel class="sentinel">
+      @if (store.isLoadingMore()) {
+        <div class="load-more-spinner">
+          <span class="spinner"></span>
+          <span>Завантаження...</span>
+        </div>
+      }
+    </div>
+  }
+
+</div>
+
+
+<!--
+@if (list(); as el) {
+  <div class="exercise-list">
+    @for (exercise of el; track exercise.name) {
+      <app-exercise-card
+        [exercise]="exercise"
+        [isSelected]="isExerciseSelected(exercise.name)"
+        (selected)="onExerciseSelected($event)"
+      />
+    } @empty {
+      <p class="no-results">No exercises found</p>
+    }
+  </div>
+}
+-->

@@ -37,3 +37,30 @@ export interface IBody {
   difficulty: string;
   category: string;
 }
+
+export interface IPersonalRecord {
+  exerciseId: string;
+  weight: number;
+  reps: number;
+  date: string;
+}
+
+export interface IExerciseSet {
+  setNum: number;
+  weight: number;
+  reps: number;
+  date: string;
+  time: string;
+}
+
+export interface IWorkoutHistory {
+  id: string;
+  date: string;
+  dayId: number;
+  programId: string;
+  duration: number; // хвилини
+  exercises: {
+    exerciseId: string;
+    sets: IExerciseSet[];
+  }[];
+}

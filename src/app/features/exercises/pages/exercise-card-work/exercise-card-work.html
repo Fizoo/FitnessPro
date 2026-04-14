@@ -1,0 +1,119 @@
+<div class="exercise-detail"
+     (touchstart)="onTouchStart($event)"
+     (touchend)="onTouchEnd($event)"
+     (mousedown)="onTouchStart($event)"
+     (mouseup)="onTouchEnd($event)">
+
+  <!-- HEADER -->
+  <header class="detail-header">
+    <button class="btn-icon" type="button" (click)="goBack()">
+      <span class="icon-back"></span>
+    </button>
+    <div class="header-center">
+      <span class="header-progress">
+        {{ currentIndex() + 1 }}/{{ totalExercises() }} {{ currentExercise().bodyPart }}
+      </span>
+    </div>
+    <div class="header-right">
+      <span class="header-time">{{ restTimeLeft() }}</span>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <div class="exercise-main">
+
+    <div class="exercise-visual">
+      <img [src]="currentExercise().gifUrl || 'assets/img/choose-img.png'" [alt]="currentExercise().name">
+
+    </div>
+
+    <section class="exercise-info">
+      <h1 class="exercise-name">{{ currentExercise().name }}</h1>
+      <p class="exercise-desc">{{ currentExercise().description }}</p>
+    </section>
+
+    <section class="workout-setup">
+      <div class="setup-controls">
+
+        <div class="control-item static">
+          <div class="circle">
+            <div class="circle-inner">
+              <span class="control-value">{{ targetReps() }}</span>
+            </div>
+          </div>
+          <span class="control-label">Repeats required</span>
+        </div>
+
+        <div class="control-item timer">
+          <div class="circle">
+            <svg class="progress-ring" viewBox="0 0 100 100">
+              <circle class="ring-bg" cx="50" cy="50" r="45"/>
+              <circle class="ring-fg" cx="50" cy="50" r="45"
+                      [attr.stroke-dasharray]="restCircumference"
+                      [attr.stroke-dashoffset]="restDashOffset()"/>
+            </svg>
+            <div class="circle-inner">
+              <span class="control-value">{{ restTimeLeft() }}</span>
+            </div>
+          </div>
+          <span class="control-label">Rest</span>
+        </div>
+
+        <div class="control-item sets">
+          <div class="circle">
+            <svg class="progress-ring" viewBox="0 0 100 100">
+              <circle class="ring-bg" cx="50" cy="50" r="45"/>
+              <circle class="ring-fg sets" cx="50" cy="50" r="45"
+                      [attr.stroke-dasharray]="setsCircumference"
+                      [attr.stroke-dashoffset]="setsDashOffset()"/>
+            </svg>
+            <div class="circle-inner">
+              <span class="control-value">{{ setsDone() }}/{{ totalSets() }}</span>
+            </div>
+          </div>
+          <span class="control-label">Sets done</span>
+        </div>
+
+      </div>
+
+      <div class="inputs-row">
+        <div class="input-tile">
+          <label for="kgInput">Kilograms</label>
+          <input id="kgInput" type="number" min="0"
+                 [value]="weight()" (input)="onWeightChange($event)"/>
+        </div>
+        <div class="input-tile">
+          <label for="repsInput">Repeats</label>
+          <input id="repsInput" type="number" min="1"
+                 [value]="repsPerSet()" (input)="onRepsChange($event)"/>
+        </div>
+        <button class="btn-plus" type="button" (click)="onAddSet()">
+          <span class="icon-plus">+</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="comment-section">
+      <button class="add-comment-btn" type="button">Add comment</button>
+    </section>
+  </div>
+
+  <!-- HISTORY -->
+  <section class="history-section">
+    <div class="history-header">
+      <h3 class="section-title">HISTORY</h3>
+      <button class="chart-link" type="button">
+        Chart <span class="icon-arrow-right"></span>
+      </button>
+    </div>
+    <div class="history-list">
+      <div class="history-date">Wed, 26/11/2025</div>
+      <div class="history-item">
+        <span class="set-number">#1</span>
+        <span class="set-details">{{ weight() }} kg × {{ repsPerSet() }} reps</span>
+        <span class="set-time">15:59</span>
+      </div>
+    </div>
+  </section>
+
+</div>
