@@ -1,0 +1,21 @@
+<div class="chart-card">
+  <div class="card-header">
+    <div>
+      <div class="card-title">{{ label() }}</div>
+      <div class="card-sub">Body Measurement</div>
+    </div>
+    <div class="card-stats">
+      <span class="current-val" [style.color]="color()">{{ currentValue() }} {{ unit() }}</span>
+      <span class="delta" [class.pos]="delta() > 0" [class.neg]="delta() < 0">
+        {{ delta() > 0 ? '+' : '' }}{{ delta() }} {{ unit() }}
+      </span>
+    </div>
+  </div>
+  <div class="line-wrap">
+    <canvas baseChart
+            [data]="chartData()"
+            [options]="chartOptions"
+            type="line">
+    </canvas>
+  </div>
+</div>

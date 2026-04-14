@@ -1,0 +1,40 @@
+<div class="page">
+  <div class="header">
+    <button class="back-btn" (click)="goBack()">←</button>
+    <span class="header-title">{{ day().title }}</span>
+    <span class="header-right">~ {{ estimatedTime() }} min.</span>
+  </div>
+
+  <!-- Info card -->
+  <div class="day-card">
+<!--    <app-circle-progress [value]="day().progress" size="56" />-->
+    <div class="day-card-info">
+      <div class="day-card-sub">{{ day().title }}</div>
+      <div class="day-card-title">{{ day().id }} workout day</div>
+    </div>
+  </div>
+
+  <!-- Exercise list -->
+  <div class="exercise-list">
+    @for (ex of day().exercises; track ex.id) {
+      <div class="exercise-row" (click)="openExercise(ex.id)">
+        <img staticGif class="ex-gif"
+             [src]="'assets/gifs/exercise_' + ex.id + '.gif'"
+             [alt]="ex.name" />
+        <div class="ex-info">
+          <div class="ex-name">{{ ex.name }}</div>
+          <div class="ex-params">{{ ex.sets }}x{{ ex.reps }}x{{ ex.weight }} kg</div>
+        </div>
+        <div class="ex-progress" [style.color]="progressColor(ex.progress)">
+          {{ ex.progress }}%
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Buttons -->
+  <div class="bottom-actions">
+    <button class="btn-reset">RESET PROGRESS</button>
+    <button class="btn-start" (click)="startWorkout()">BEGIN WORKOUT</button>
+  </div>
+</div>

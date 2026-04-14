@@ -1,0 +1,34 @@
+<div class="cal-wrap">
+  <div class="cal-header">
+    <button class="nav-btn" type="button" (click)="changeMonth(-1)">←</button>
+    <span class="cal-title">{{ monthLabel() }}</span>
+    <button class="nav-btn" type="button" (click)="changeMonth(1)">→</button>
+  </div>
+
+  <div class="day-headers">
+    @for (d of DAY_HEADERS; track d) {
+      <div class="day-hdr">{{ d }}</div>
+    }
+  </div>
+
+  <div class="cal-grid">
+    @for (cell of cells(); track cell.key) {
+      <div class="cal-cell"
+           [class.other-month]="cell.otherMonth"
+           [class.today]="cell.isToday"
+           [class.has-workout]="!!cell.workout"
+           (click)="onDayClick(cell)">
+
+        <span class="day-num">{{ cell.day }}</span>
+
+        @if (cell.workout) {
+          <span class="badge" [style.background]="progressColor(cell.workout.progress)">
+            {{ cell.workout.progress }}%
+          </span>
+          <span class="workout-name">{{ cell.workout.name }}</span>
+        }
+
+      </div>
+    }
+  </div>
+</div>

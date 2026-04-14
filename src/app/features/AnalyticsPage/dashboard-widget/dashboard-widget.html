@@ -1,0 +1,88 @@
+<div class="dashboard-wrap">
+
+  <!-- Header -->
+  <div class="page-header">
+    <span class="page-title">Dashboard</span>
+    <button class="edit-btn" [class.active]="editMode()" (click)="toggleEdit()">
+      {{ editMode() ? '✅ Done' : '✏️ Edit' }}
+    </button>
+  </div>
+
+  <!-- Active Widgets -->
+  <div class="widget-grid">
+    @for (widget of activeWidgets(); track widget.id) {
+      <div class="widget-wrap" [class.full]="widget.fullWidth" [class.edit-mode]="editMode()">
+
+        @if (editMode()) {
+          <button class="remove-btn" (click)="toggleWidget(widget.id)">×</button>
+        }
+
+        @switch (widget.id) {
+          @case ('stats') {
+            <div class="stat-grid">
+              @for (card of statCards(); track card.label) {
+                <app-stat-card-component [data]="card" />
+              }
+            </div>
+          }
+          @case ('donut') {
+            <app-muscle-donut-chart-component [data]="muscleStats()" />
+          }
+          @case ('tonnage') {
+            <app-tonnage-chart-component
+              [labels]="tonnageData().labels"
+              [values]="tonnageData().values" />
+          }
+          @case ('pr') {
+            <div class="charts-col">
+              @for (ex of prExercises; track ex.id) {
+                @if (prData()[ex.id]) {
+                  <app-prprogress-chart-component
+                    [exerciseName]="ex.name"
+                    [data]="prData()[ex.id]"
+                    [color]="ex.color" />
+                }
+              }
+            </div>
+          }
+          @case ('body') {
+            <app-body-measure-chart-component
+              measureType="weight"
+              [data]="measureData()['weight']" />
+          }
+          @case ('freq') {
+            <app-tonnage-chart-component
+              [labels]="freqData().labels"
+              [values]="freqData().values" />
+          }
+        }
+
+      </div>
+    }
+  </div>
+
+  <!-- Bottom Sheet (Edit Mode) -->
+  @if (editMode()) {
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-title">Add / Remove Widgets</div>
+      <div class="widget-options">
+        @for (widget of widgets(); track widget.id) {
+          <div class="widget-option" [class.added]="widget.active" (click)="toggleWidget(widget.id)">
+            <div class="opt-left">
+              <div class="opt-icon">{{ widget.icon }}</div>
+              <div>
+                <div class="opt-name">{{ widget.label }}</div>
+                <div class="opt-desc">{{ widget.description }}</div>
+              </div>
+            </div>
+            <button class="add-btn" [class.minus]="widget.active" [class.plus]="!widget.active">
+              {{ widget.active ? '−' : '+' }}
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+</div>

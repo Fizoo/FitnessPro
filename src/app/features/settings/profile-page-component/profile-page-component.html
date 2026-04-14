@@ -1,0 +1,117 @@
+<div class="profile-wrapper">
+  <div class="profile-card">
+
+    <!-- Аватар -->
+    <div class="avatar-section">
+      <div class="avatar-wrap">
+        @if (avatarUrl()) {
+          <img [src]="avatarUrl()" alt="avatar" class="avatar-img" />
+        } @else {
+          <div class="avatar-placeholder">{{ initials() }}</div>
+        }
+        <label class="avatar-edit" [class.loading]="isUploadingPhoto()">
+          @if (isUploadingPhoto()) {
+            <span class="spinner"></span>
+          } @else {
+            <span>✏️</span>
+          }
+          <input type="file" accept="image/*" (change)="onPhotoSelected($event)" hidden />
+        </label>
+      </div>
+      <div class="avatar-info">
+        <h2>{{ userService.displayName() }}</h2>
+        <p>{{ userService.email() }}</p>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSave()">
+
+      <!-- Особисті дані -->
+      <div class="section-title">Особисті дані</div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label>Ім'я</label>
+          <input formControlName="displayName" type="text" placeholder="Твоє ім'я" />
+        </div>
+        <div class="form-field">
+          <label>Вік</label>
+          <input formControlName="age" type="number" placeholder="25" min="10" max="100" />
+        </div>
+        <div class="form-field">
+          <label>Стать</label>
+          <select formControlName="gender">
+            <option value="" disabled>Обери стать</option>
+            @for (g of genders; track g.value) {
+              <option [value]="g.value">{{ g.label }}</option>
+            }
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Ціль</label>
+          <select formControlName="fitnessGoal">
+            <option value="" disabled>Обери ціль</option>
+            @for (goal of fitnessGoals; track goal.value) {
+              <option [value]="goal.value">{{ goal.label }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <!-- Фізичні показники -->
+      <div class="section-title">Фізичні показники</div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label>Зріст (см)</label>
+          <input formControlName="height" type="number" placeholder="175" min="100" max="250" />
+        </div>
+        <div class="form-field">
+          <label>Вага ({{ userService.weightUnit() }})</label>
+          <input formControlName="weight" type="number" placeholder="70" min="30" max="300" />
+        </div>
+      </div>
+
+      <!-- Налаштування -->
+      <div class="section-title">Налаштування</div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label>Одиниці ваги</label>
+          <select formControlName="weightUnit">
+            <option value="kg">Кілограми (kg)</option>
+            <option value="lbs">Фунти (lbs)</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Мова</label>
+          <select formControlName="language">
+            <option value="uk">Українська</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Тема</label>
+          <select formControlName="theme">
+            <option value="dark">Темна</option>
+            <option value="light">Світла</option>
+          </select>
+        </div>
+        <div class="form-field toggle-field">
+          <label>Сповіщення</label>
+          <label class="toggle">
+            <input formControlName="notifications" type="checkbox" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Кнопка -->
+      <button type="submit" class="save-btn" [disabled]="isSaving() || form.invalid">
+        @if (isSaving()) {
+          <span class="spinner"></span> Збереження...
+        } @else {
+          Зберегти зміни
+        }
+      </button>
+
+    </form>
+  </div>
+</div>

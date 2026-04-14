@@ -1,0 +1,19 @@
+<div class="chart-card">
+  <div class="card-header">
+    <div>
+      <div class="card-title">Total Tonnage</div>
+      <div class="card-sub">{{ (totalTonnage() / 1000).toFixed(1) }}т за період</div>
+    </div>
+    <div class="group-tabs">
+      <div class="group-tab" [class.active]="groupBy() === 'week'" (click)="groupBy.set('week')">Week</div>
+      <div class="group-tab" [class.active]="groupBy() === 'month'" (click)="groupBy.set('month')">Month</div>
+    </div>
+  </div>
+  <div class="bar-wrap">
+    <canvas baseChart
+            [data]="chartData()"
+            [options]="chartOptions"
+            type="bar">
+    </canvas>
+  </div>
+</div>

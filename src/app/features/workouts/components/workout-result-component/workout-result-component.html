@@ -1,0 +1,127 @@
+<!-- workout-result.component.html -->
+
+<div class="result-wrap">
+
+  <!-- HEADER -->
+  <div class="result-header">
+    <button class="icon-btn" (click)="goBack()">✕</button>
+    <img src="assets/img/logo.png" alt="logo" class="logo-img" />
+    <button class="icon-btn" (click)="share()">⤴</button>
+  </div>
+
+  <!-- TITLE -->
+  <div class="result-title">
+    <h1>WORKOUT RESULTS</h1>
+    <p class="result-date">{{ dateLabel() }}</p>
+  </div>
+
+  <!-- DAY CARD -->
+  <div class="day-card">
+    <div class="day-info">
+      <span class="day-number">{{ result().dayNumber }} workout day</span>
+      <span class="day-name">{{ result().dayName }}</span>
+    </div>
+    <div class="progress-ring-wrap">
+      <svg width="56" height="56" viewBox="0 0 56 56">
+        <circle class="ring-bg" cx="28" cy="28" r="22"/>
+        <circle  class="ring-fg" cx="28" cy="28" r="22"
+                 [attr.stroke]="result().progress | progressColor"
+                [attr.stroke-dasharray]="circumference"
+                [attr.stroke-dashoffset]="dashOffset(result().progress)"
+                transform="rotate(-90 28 28)"/>
+      </svg>
+      <span  class="ring-label">{{ result().progress }}%</span>
+    </div>
+  </div>
+
+  <!-- DURATION + REST -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <span class="stat-value">{{ duration() }}</span>
+      <span class="stat-label">Workout duration</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">{{ avgRest() }}</span>
+      <span class="stat-label">Avg. Rest</span>
+    </div>
+  </div>
+
+  <!-- CALORIES / STEPS / PULSE -->
+  <div class="metrics-row">
+    <div class="metric">
+      <span class="metric-icon">🔥</span>
+      <span class="metric-value">{{ result().calories }}</span>
+      <span class="metric-label">Calories</span>
+    </div>
+    <div class="metric">
+      <span class="metric-icon">👟</span>
+      <span class="metric-value">—</span>
+      <span class="metric-label">Steps</span>
+    </div>
+    <div class="metric">
+      <span class="metric-icon">❤️</span>
+      <span class="metric-value">—</span>
+      <span class="metric-label">Pulse</span>
+    </div>
+  </div>
+
+  <!-- REPS + WEIGHT CIRCLES -->
+  <div class="circle-stats">
+    <div class="circle-stat">
+      <div class="circle-wrap">
+        <svg width="56" height="56" viewBox="0 0 56 56">
+          <circle class="ring-bg" cx="28" cy="28" r="22"/>
+          <circle class="ring-fg teal" cx="28" cy="28" r="22"
+                  [attr.stroke]="repsPercent() | progressColor"
+                  [attr.stroke-dasharray]="circumference"
+                  [attr.stroke-dashoffset]="dashOffset(repsPercent())"
+                  transform="rotate(-90 28 28)"/>
+        </svg>
+        <span class="ring-label">{{ repsPercent() }}%</span>
+      </div>
+      <div class="circle-text">
+        <strong>Reps made</strong>
+        <span>{{ result().repsMade }} reps of the expected {{ result().repsExpected }} reps</span>
+      </div>
+    </div>
+
+    <div class="circle-stat">
+      <div class="circle-wrap">
+        <svg width="56" height="56" viewBox="0 0 56 56">
+          <circle class="ring-bg" cx="28" cy="28" r="22"/>
+          <circle class="ring-fg teal" cx="28" cy="28" r="22"
+                  [attr.stroke]="weightPercent() | progressColor"
+                  [attr.stroke-dasharray]="circumference"
+                  [attr.stroke-dashoffset]="dashOffset(weightPercent())"
+                  transform="rotate(-90 28 28)"/>
+        </svg>
+        <span class="ring-label">{{ weightPercent() }}%</span>
+      </div>
+      <div class="circle-text">
+        <strong>Lifted weight</strong>
+        <span>{{ result().weightLifted | number }} kg of the expected {{ result().weightExpected | number:'1.1-1' }} kg</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXERCISE LIST -->
+  <div class="exercise-list">
+    @for (ex of result().exercises; track ex.id) {
+      <div class="exercise-item">
+        <img [src]="gifUrl(ex.id)" [alt]="ex.name" class="ex-gif"
+             onerror="this.src='assets/img/choose-img.png'"/>
+        <div class="ex-info">
+          <span class="ex-name">{{ ex.name }}</span>
+          <span class="ex-sub">Repeats: {{ ex.totalRepeats }} &nbsp; Kilograms: {{ ex.totalKg }}</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="actions">
+    <button class="btn-share" (click)="share()">SHARE EXPERIENCE</button>
+    <button class="btn-delete" (click)="delete()">Delete workout result</button>
+  </div>
+
+</div>

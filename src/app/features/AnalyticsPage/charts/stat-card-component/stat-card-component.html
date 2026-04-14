@@ -1,0 +1,12 @@
+<div class="stat-card" [style.border-color]="data().color + '44'">
+  <div class="stat-top">
+    <span class="stat-label">{{ data().label }}</span>
+    <svg width="80" height="28" viewBox="0 0 80 28">
+      <path [attr.d]="sparklinePath()" fill="none" [attr.stroke]="data().color" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="stat-value" [style.color]="data().color">{{ data().value }}</div>
+  <div class="stat-delta" [class.pos]="data().deltaPositive" [class.neg]="!data().deltaPositive">
+    {{ data().delta }}
+  </div>
+</div>

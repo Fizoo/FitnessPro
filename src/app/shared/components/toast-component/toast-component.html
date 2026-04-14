@@ -1,0 +1,9 @@
+<div class="toast-container">
+  @for (n of notify.notifications(); track n.id) {
+    <div class="toast toast--{{ n.type }}">
+      <span class="toast__icon">{{ icon(n.type) }}</span>
+      <span class="toast__message">{{ n.message }}</span>
+      <button class="toast__close" (click)="notify.dismiss(n.id)">✕</button>
+    </div>
+  }
+</div>

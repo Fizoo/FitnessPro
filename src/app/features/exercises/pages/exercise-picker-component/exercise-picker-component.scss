@@ -1,0 +1,115 @@
+.picker-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #050607;
+  color: #e0e0e0;
+}
+
+.picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 0.5px solid #1e2a2a;
+}
+
+.picker-title { font-size: 16px; font-weight: 500; }
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: #e0e0e0;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.search-input {
+  margin: 12px 16px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 0.5px solid #1e2a2a;
+  background: #0d1a1a;
+  color: #e0e0e0;
+  font-size: 14px;
+  width: calc(100% - 32px);
+  &:focus { outline: none; border-color: #26c6da; }
+}
+
+.chips-row {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 0 16px 10px;
+  scrollbar-width: none;
+}
+
+.chip {
+  padding: 5px 12px;
+  border-radius: 16px;
+  border: 0.5px solid #1e2a2a;
+  background: #0d1a1a;
+  cursor: pointer;
+  font-size: 12px;
+  color: #9e9e9e;
+  white-space: nowrap;
+  &.active { background: #26c6da; color: #000; border-color: #26c6da; font-weight: 500; }
+}
+
+.ex-list { flex: 1; overflow-y: auto; border-top: 0.5px solid #1e2a2a; }
+
+.ex-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 0.5px solid #1e2a2a;
+  cursor: pointer;
+  &:hover { background: #0d1a1a; }
+  &.selected { background: #26c6da12; border-left: 3px solid #26c6da; }
+}
+
+.ex-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #0d1a1a;
+  flex-shrink: 0;
+}
+
+.ex-info { flex: 1; min-width: 0; }
+.ex-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ex-meta { font-size: 11px; color: #9e9e9e; margin-top: 2px; }
+
+.pr-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #26c6da22;
+  color: #26c6da;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.picker-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-top: 0.5px solid #1e2a2a;
+}
+
+.selected-info { font-size: 13px; color: #9e9e9e; }
+
+.btn-add {
+  background: #26c6da;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 22px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  &:disabled { background: #1e2a2a; color: #555; cursor: default; }
+}

@@ -1,0 +1,74 @@
+
+<div class="page">
+  <div class="header">
+    <button class="back-btn" (click)="goBack()">←</button>
+    <span class="header-title">{{ exercise().name }}</span>
+    <span class="check" (click)="save()">✓</span>
+  </div>
+
+  <!-- Type tabs -->
+  <div class="type-tabs">
+    <div class="type-tab" [class.active]="type() === 'straight'" (click)="type.set('straight')">Straight</div>
+    <div class="type-tab" [class.active]="type() === 'pyramid'" (click)="type.set('pyramid')">Pyramid</div>
+  </div>
+
+  <!-- Params -->
+  <div class="params-grid">
+    <div class="param-block">
+      <div class="param-label">Sets</div>
+      <div class="param-value">{{ exercise().sets }}</div>
+    </div>
+    <div class="param-block">
+      <div class="param-label">Repeats</div>
+      <div class="param-value">{{ exercise().reps }}</div>
+    </div>
+  </div>
+  <div class="params-grid">
+    <div class="param-block">
+      <div class="param-label">Weight</div>
+      <div class="param-value">{{ exercise().weight }}</div>
+    </div>
+    <div class="param-block units">
+      <div class="param-label">Measurement units</div>
+      <div class="unit-row">
+        <span [class.active-unit]="unit() === 'kg'" (click)="unit.set('kg')">● kg</span>
+        <span [class.active-unit]="unit() === '%'" (click)="unit.set('%')">○ % of max weight</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rest timer -->
+  <div class="param-label" style="padding: 0 16px; margin-top: 16px;">Rest time</div>
+  <div class="rest-timer">
+    <div class="rest-prev">{{ restMinutes() - 1 }} : {{ restSeconds() === 0 ? 59 : restSeconds() - 1 }}</div>
+    <div class="rest-current">{{ restMinutes() | number:'2.0' }} : {{ restSeconds() | number:'2.0' }}</div>
+    <div class="rest-next">{{ restMinutes() + 1 }} : {{ restSeconds() === 59 ? 0 : restSeconds() + 1 }}</div>
+  </div>
+
+  <div class="no-rest-row">
+    <span>No rest</span>
+    <mat-slide-toggle [(ngModel)]="noRest" />
+  </div>
+
+  <!-- Comment -->
+  <div class="comment-block">
+    <div class="param-label">Comment</div>
+    <input class="comment-input" placeholder="Enter a comment (optional)" [(ngModel)]="comment" />
+  </div>
+
+  <!-- Save -->
+  <button class="btn-save" (click)="save()">SAVE</button>
+
+  <!-- History -->
+  <div class="section-title" style="padding: 0 16px;">History</div>
+  @for (h of history(); track h.date) {
+    <div class="history-date">{{ h.date }}</div>
+    @for (s of h.sets; track s.num) {
+      <div class="history-row">
+        <span class="set-num">#{{ s.num }}</span>
+        <span>{{ s.weight }} kg x {{ s.reps }} reps</span>
+        <span class="set-time">{{ s.time }}</span>
+      </div>
+    }
+  }
+</div>

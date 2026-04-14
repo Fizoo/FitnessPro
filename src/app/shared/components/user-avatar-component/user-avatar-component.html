@@ -1,0 +1,46 @@
+<button class="avatar-btn" [matMenuTriggerFor]="menu">
+  @if (!auth.isInitialized()) {
+    <span class="avatar-skeleton"></span>
+
+  } @else if (auth.currentUser()) {
+    @if (auth.currentUser()?.photoURL && !hasImgError()) {
+      <img [src]="auth.currentUser()!.photoURL"
+           alt="avatar"
+           class="avatar-img"
+           (error)="onImgError($event)" />
+    } @else {
+      <mat-icon class="avatar-icon logged-in">account_circle</mat-icon>
+    }
+
+  } @else {
+    <mat-icon class="avatar-icon guest">person_outline</mat-icon>
+  }
+</button>
+
+<mat-menu #menu="matMenu" xPosition="before">
+  @if (auth.currentUser()) {
+    <div class="menu-user" mat-menu-item disabled>
+      <span class="menu-name">{{ userService.displayName() }}</span>
+      <span class="menu-email">{{ userService.email() }}</span>
+    </div>
+    <mat-divider />
+    <button mat-menu-item (click)="goSettings()">
+      <mat-icon>settings</mat-icon> Settings
+    </button>
+    <button mat-menu-item (click)="goChangeUser()">
+      <mat-icon>switch_account</mat-icon> Change user
+    </button>
+    <mat-divider />
+    <button mat-menu-item (click)="onLogout()" class="logout-item">
+      <mat-icon>logout</mat-icon> Logout
+    </button>
+
+  } @else {
+    <button mat-menu-item (click)="goSettings()">
+      <mat-icon>settings</mat-icon> Settings
+    </button>
+    <button mat-menu-item (click)="goLogin()">
+      <mat-icon>login</mat-icon> Login
+    </button>
+  }
+</mat-menu>

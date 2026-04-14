@@ -1,0 +1,127 @@
+.analytics-wrap {
+  min-height: 100vh;
+  background: #050607;
+  color: #e0e0e0;
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 0 16px 32px;
+  font-family: sans-serif;
+}
+
+.header1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+
+  gap: 1rem;
+  .back-btn {
+    background: transparent;
+    border: none;
+    color: var(--title-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s;
+
+    &:hover {
+      color: var(--first-color);
+    }
+
+    i {
+      font-size: 1.5rem;
+    }
+  }
+
+  .box{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    .logo {
+      flex: 1;
+      height: 32px;
+      object-fit: contain;
+      text-align: center;
+      cursor: pointer;
+    }
+    h2 {
+      flex: 1;
+      text-align: center;
+      font-size: var(--h2-font-size);
+      color: var(--title-color);
+      margin: 0;
+      font-weight: 700;
+      // ПК
+      @media (min-width: 1024px) {
+          font-size: 1.5rem;
+      }
+
+    }
+  }
+  .icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s;
+
+    &:hover { color: var(--first-color); }
+
+    i { font-size: 1.5rem; }
+  }
+}
+.page-header {
+  padding: 16px 0;
+  border-bottom: 0.5px solid #1e2a2a;
+  margin-bottom: 16px;
+}
+
+.page-title { font-size: 20px; font-weight: 500; }
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #9e9e9e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 20px 0 10px;
+}
+
+.charts-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.measure-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.measure-tab {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 0.5px solid #1e2a2a;
+  background: #0d1a1a;
+  cursor: pointer;
+  font-size: 13px;
+  color: #9e9e9e;
+  white-space: nowrap;
+  &.active { background: #26c6da; color: #000; border-color: #26c6da; font-weight: 500; }
+}

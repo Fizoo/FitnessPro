@@ -1,0 +1,30 @@
+<div class="chart-card">
+  <div class="card-header">
+    <span class="card-title">Muscle Groups</span>
+    <div class="period-tabs">
+      @for (p of periods; track p) {
+        <div class="period-tab" [class.active]="period() === p" (click)="period.set(p)">
+          {{ p | titlecase }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="donut-wrap">
+    <canvas baseChart
+            [data]="chartData()"
+            [options]="chartOptions"
+            type="doughnut">
+    </canvas>
+  </div>
+
+  <div class="legend-grid">
+    @for (item of data(); track item.label) {
+      <div class="legend-item">
+        <span class="legend-dot" [style.background]="item.color"></span>
+        <span class="legend-label">{{ item.label }}</span>
+        <span class="legend-val">{{ item.value }}%</span>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="analytics-wrap">
+
+  <div class="header1">
+
+    <button class="back-btn" (click)="onBack()">
+      <i class="material-icons">arrow_back</i>
+    </button>
+
+    <div class="box">
+      <img (click)="onMain()" src="../assets/img/logo.png" alt="logo" class="logo" />
+      <h2>Analytics</h2>
+    </div>
+
+
+    <button class="icon-btn">
+      <i class="material-icons">menu</i>
+    </button>
+  </div>
+
+  <!--  <div class="page-header">
+      <span class="page-title">Analytics</span>
+    </div>-->
+
+  <!-- Stat Cards -->
+  <div class="stat-grid">
+    @for (card of statCards(); track card.label) {
+      <app-stat-card-component [data]="card" />
+    }
+  </div>
+
+  <!-- Muscle Donut -->
+  <div class="section-title">Muscle Groups</div>
+  <app-muscle-donut-chart-component [data]="muscleStats()" />
+
+  <!-- Tonnage -->
+  <div class="section-title">Tonnage</div>
+  <app-tonnage-chart-component
+    [labels]="tonnageData().labels"
+    [values]="tonnageData().values" />
+
+  <!-- Body Measurements -->
+  <div class="section-title">Body Measurements</div>
+
+  <div class="measure-tabs">
+    @for (m of measures; track m.key) {
+      <div class="measure-tab" [class.active]="activeMeasure() === m.key" (click)="activeMeasure.set(m.key)">
+        {{ m.label }}
+      </div>
+    }
+  </div>
+
+  @if (measureData()[activeMeasure()]) {
+    <app-body-measure-chart-component
+      [measureType]="activeMeasure()"
+      [data]="measureData()[activeMeasure()]"
+      [unit]="activeMeasureMeta().unit"/>
+  }
+
+  <!-- PR Progress -->
+  <div class="section-title">Personal Records</div>
+  <div class="measure-tabs">
+    @for (e of prExercises; track e.id) {
+      <div class="measure-tab" [class.active]="activePR() === e.id" (click)="activePR.set(e.id)">
+        {{ e.name }}
+      </div>
+    }
+  </div>
+  @if (prData()[activePR()]) {
+    <app-prprogress-chart-component
+      [exerciseName]="activePRMeta().name"
+      [data]="prData()[activePR()]"
+      [color]="activePRMeta().color"
+      unit="kg" />
+  }
+</div>

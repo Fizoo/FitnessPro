@@ -1,0 +1,144 @@
+<div class="program-wrap">
+
+  <div class="prog-header">
+    <button class="back-btn" (click)="onBack()">
+      <i class="material-icons">arrow_back</i>
+    </button>
+
+    <h2 class="prog-title">{{ program().name }}</h2>
+
+    <img (click)="onMain()" src="../assets/img/logo.png" alt="logo" class="logo" />
+  </div>
+
+  <div class="week-tabs">
+    @for (week of weeks(); track week.weekNumber; let i = $index) {
+      <div class="week-tab" [class.active]="activeWeek() === i" (click)="activeWeek.set(i)">
+        Week {{ week.weekNumber }}
+      </div>
+    }
+  </div>
+
+  <div class="days-list"
+       cdkDropList
+       [cdkDropListData]="currentWeekDays()"
+       (cdkDropListDropped)="dropDay($event)">
+
+    @for (day of currentWeekDays(); track day.id) {
+      <div class="day-card" cdkDrag>
+
+        <div class="drag-handle day-drag" cdkDragHandle>⠿</div>
+
+        <div class="day-header">
+          @if (editingDayId() === day.id) {
+            <input
+              class="day-name-input"
+              [value]="renameDayName()"
+              (input)="renameDayName.set($any($event.target).value)"
+              (keydown.enter)="confirmRenameDay(day.id)"
+              (blur)="confirmRenameDay(day.id)"
+              autofocus
+            />
+          } @else {
+            <span class="day-name" (dblclick)="startRenameDay(day)">{{ day.name }}</span>
+          }
+
+          <div class="day-actions">
+            <span class="day-tonnage">{{ dayTonnage(day.id) | number }} кг</span>
+            <div class="copy-menu-wrap">
+              <button class="icon-btn-sm" title="Копіювати в тиждень" (click)="toggleCopyMenu(day.id)">⎘</button>
+              @if (showCopyMenu() === day.id) {
+                <div class="copy-menu">
+                  <div class="copy-menu-title">Копіювати в:</div>
+                  @for (w of otherWeeks(); track w.idx) {
+                    <div class="copy-menu-item" (click)="copyDayToWeek(day.id, w.idx); showCopyMenu.set(null)">
+                      Week {{ w.weekNumber }}
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+            <button class="icon-btn-sm" title="Перейменувати" (click)="startRenameDay(day)">✎</button>
+            <button class="icon-btn-sm danger" title="Видалити день" (click)="removeDay(day.id)">🗑</button>
+          </div>
+        </div>
+
+        <div class="ex-list"
+             cdkDropList
+             [cdkDropListData]="day.exercises"
+             (cdkDropListDropped)="dropExercise($event, day.id)">
+
+          @for (plan of day.exercises; track plan.exerciseId) {
+            @let ex = getExercise(plan.exerciseId);
+            @let pr = calcPR(ex);
+            @let pct = pctOfPR(plan.sets, pr);
+
+            <div class="ex-block" cdkDrag>
+              <div class="ex-drag-placeholder" *cdkDragPlaceholder></div>
+
+              <div class="ex-row">
+                <div class="drag-handle" cdkDragHandle>⠿</div>
+                <img class="ex-img" [src]="gifPath(plan.exerciseId)" [alt]="ex?.name" />
+                <div class="ex-info">
+                  <div class="ex-name">{{ ex?.name ?? plan.exerciseId }}</div>
+                  <div class="ex-meta">{{ ex?.bodyPart }} · {{ ex?.equipment }}</div>
+                </div>
+                <div class="ex-right">
+                  @if (pr) {
+                    <div class="pct-label" [style.color]="pctColor(pct)">{{ pct }}%</div>
+                    <div class="pr-label">ПМ {{ pr }}</div>
+                  }
+                  <div class="tonnage-label">{{ tonnage(plan) | number }} кг</div>
+                </div>
+                <button class="icon-btn-sm danger" (click)="removeExercise(day.id, plan.exerciseId)">✕</button>
+              </div>
+
+              <div class="sets-table">
+                <div class="sets-head">
+                  <span>Підхід</span>
+                  <span>Вага (кг)</span>
+                  <span>Повт.</span>
+                  <span></span>
+                </div>
+                @for (set of plan.sets; track $index; let si = $index) {
+                  <div class="set-row">
+                    <span class="set-num" [style.color]="pctColor(pctOfPR([set], pr))">{{ si + 1 }}</span>
+                    <input
+                      class="set-input"
+                      type="number"
+                      [value]="set.weight || ''"
+                      placeholder="0"
+                      (change)="updateSet(day.id, plan.exerciseId, si, 'weight', +$any($event.target).value)"
+                    />
+                    <input
+                      class="set-input"
+                      type="number"
+                      [value]="set.reps || ''"
+                      placeholder="0"
+                      (change)="updateSet(day.id, plan.exerciseId, si, 'reps', +$any($event.target).value)"
+                    />
+                    <button class="icon-btn-sm danger" (click)="removeSet(day.id, plan.exerciseId, si)">−</button>
+                  </div>
+                }
+                <button class="btn-add-set" (click)="addSet(day.id, plan.exerciseId)">+ підхід</button>
+              </div>
+            </div>
+          }
+        </div>
+
+        <button class="btn-add-ex" (click)="openPicker(day.id)">+ Додати вправу</button>
+      </div>
+    }
+
+    <button class="btn-add-day" (click)="addDay()">+ Додати день</button>
+  </div>
+
+  @if (showPicker()) {
+    <div class="picker-overlay">
+      <app-exercise-picker
+        [exercises]="exercises()"
+        (selected)="onExerciseSelected($event)"
+        (cancelled)="showPicker.set(false)" />
+    </div>
+  }
+
+</div>
