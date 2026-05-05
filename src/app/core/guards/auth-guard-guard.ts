@@ -7,9 +7,11 @@ import {AuthStore} from '../store/auth.store';
 
 export const authGuard: CanActivateFn = () => {
   const auth = inject(AuthStore);
+  const router = inject(Router); // ← inject тут, не всередині pipe
+
   return toObservable(auth.isInitialized).pipe(
     filter(Boolean),
     take(1),
-    map(() => auth.isLoggedIn() ? true : inject(Router).createUrlTree(['/login']))
+    map(() => auth.isLoggedIn() ? true : router.createUrlTree(['/login']))
   );
 };

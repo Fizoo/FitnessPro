@@ -1,26 +1,21 @@
 .exercise-card {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 1rem;
-  padding: 0.75rem;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 0.5px solid rgba(255,255,255,0.06);
   cursor: pointer;
-  transition: all 0.3s;
+  transition: background 0.2s;
 
-  &:hover {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
-    border-color: rgba(255, 255, 255, 0.1);
-    transform: translateX(0.25rem);
-  }
+  &:hover { background: rgba(255,255,255,0.04); }
+  &.selected { background: rgba(38,198,218,0.08); border-left: 3px solid #26c6da; }
 
   .exercise-image {
-    width: 5rem;
-    height: 5rem;
-    border-radius: 0.75rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
     overflow: hidden;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0,0,0,0.3);
     flex-shrink: 0;
 
     img {
@@ -32,44 +27,38 @@
 
   .exercise-info {
     flex: 1;
+    min-width: 0;
 
     h3 {
-      font-size: var(--normal-font-size);
-      color: var(--title-color);
-      margin: 0;
-      font-weight: var(--font-medium);
+      font-size: 14px;
+      color: #e0e0e0;
+      margin: 0 0 3px;
+      font-weight: 500;
       text-transform: capitalize;
-      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .meta {
+      font-size: 11px;
+      color: #9e9e9e;
+      text-transform: capitalize;
     }
   }
 
   .checkbox {
     background: transparent;
     border: none;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255,255,255,0.3);
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 4px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: color 0.3s;
     flex-shrink: 0;
+    transition: color 0.2s;
 
-    &.checked {
-      color: var(--first-color);
-    }
-
-    &:hover {
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    &.checked:hover {
-      color: var(--first-color);
-      opacity: 0.8;
-    }
-
-    i {
-      font-size: 1.5rem;
-    }
+    &.checked { color: #26c6da; }
+    i { font-size: 22px; }
   }
 }

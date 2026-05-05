@@ -12,8 +12,8 @@ export interface IExercise {
   difficulty: Difficulty;
   category: Category;
   isFavorite: boolean,
-  personalRecord: number|  null,
-  history: string[]
+  personalRecord?:null|any,
+  history?:any
 }
 
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
@@ -45,13 +45,7 @@ export interface IPersonalRecord {
   date: string;
 }
 
-export interface IExerciseSet {
-  setNum: number;
-  weight: number;
-  reps: number;
-  date: string;
-  time: string;
-}
+
 
 export interface IWorkoutHistory {
   id: string;
@@ -63,4 +57,30 @@ export interface IWorkoutHistory {
     exerciseId: string;
     sets: IExerciseSet[];
   }[];
+}
+// Один підхід
+export interface IExerciseSet {
+  setNum: number;
+  weight: number;
+  reps: number;
+  time: string;        // "16:55"
+  comment?: string;    // коментар на підхід
+}
+
+// Одна сесія по одній вправі (один день)
+export interface IExerciseSession {
+  id: string;          // auto-id від Firestore
+  exerciseId: string;  // "0007"
+  bodyPart: string;    // "back" — щоб дістати вправу якщо треба
+  date: string;        // "2026-03-03" — для групування по даті
+  comment?: string;    // коментар на всю сесію
+  sets: IExerciseSet[];
+}
+export interface IData {
+  name: string,
+  data: IExercise[],
+  id: number,
+  exerciseCount: number
+  imageUrl: string,
+  params: string
 }

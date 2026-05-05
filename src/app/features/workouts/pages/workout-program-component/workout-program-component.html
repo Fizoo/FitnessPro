@@ -133,12 +133,11 @@
   </div>
 
   @if (showPicker()) {
-    <div class="picker-overlay">
+  <!--  <div class="picker-overlay">
       <app-exercise-picker
-        [exercises]="exercises()"
         (selected)="onExerciseSelected($event)"
         (cancelled)="showPicker.set(false)" />
-    </div>
+    </div>-->
   }
 
 </div>

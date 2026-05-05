@@ -12,41 +12,30 @@
     <p class="no-results">Вправи не знайдено</p>
   }
 
+
   <div class="exercise-grid">
-    @for (exercise of store.exercises(); track exercise.id) {
+    @for (ex of store.filteredExercises(); track ex.id) {
       <app-exercise-card
-        [exercise]="exercise"
-        (selected)="onExerciseSelected($event)"
+        [exercise]="ex"
+        (click)="onExerciseSelected(ex)"
       />
     }
   </div>
 
-  @if (!store.isLoading()) {
-    <div #sentinel class="sentinel">
-      @if (store.isLoadingMore()) {
-        <div class="load-more-spinner">
-          <span class="spinner"></span>
-          <span>Завантаження...</span>
-        </div>
-      }
-    </div>
-  }
+  <div
+    appInfiniteScroll
+    [canLoad]="store.hasMore()"
+    [loading]="store.isLoadingMore()"
+    (loadMore)="onLoadMore()"
+    class="sentinel"
+  >
+    @if (store.isLoadingMore()) {
+      <div class="load-more-spinner">
+        <span class="spinner"></span>
+        <span>Завантаження...</span>
+      </div>
+    }
+  </div>
 
 </div>
 
-
-<!--
-@if (list(); as el) {
-  <div class="exercise-list">
-    @for (exercise of el; track exercise.name) {
-      <app-exercise-card
-        [exercise]="exercise"
-        [isSelected]="isExerciseSelected(exercise.name)"
-        (selected)="onExerciseSelected($event)"
-      />
-    } @empty {
-      <p class="no-results">No exercises found</p>
-    }
-  </div>
-}
--->

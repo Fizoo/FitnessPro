@@ -1,73 +1,82 @@
-// training-item.component.scss
 .training-item {
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 16px;
-  //background: var(--bg-color);
   background: linear-gradient(135deg, rgba(26, 188, 156, 0.1), rgba(52, 152, 219, 0.1));
   border: 1px solid rgba(255, 255, 255, 0.05);
-  //border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   margin-bottom: 12px;
   transition: all 0.3s ease;
-  font-family: var(--body-font);
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
+  cursor: pointer;
 
   &__progress {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
-    width: 70px;
-    height: 70px;
 
     .custom-spinner {
-      ::ng-deep circle {
-        stroke: var(--progress-color, #26c6da) !important;
-      }
+      --mdc-circular-progress-active-indicator-color: var(--progress-color, #26c6da);
     }
 
     .progress-text {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 1rem;
+      font-size: 0.75rem;
       font-weight: 600;
-      color: var(--progress-color);
+      color: var(--progress-color, #26c6da);
     }
   }
 
   &__content {
     flex: 1;
+    min-width: 0;
   }
 
   &__day {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.6);
-    margin: 0 0 4px 0;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0 4px;
   }
 
   &__title {
-    font-size: var(--h2-font-size);
+    font-size: 1rem;
     font-weight: 600;
-    opacity: 0.9;
-    //color: #fff;
-  //  font-family: var(--body-font);
+    color: #fff;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  &__indicator {
-    flex-shrink: 0;
+  &__indicator .indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #26c6da;
   }
 }
 
-.indicator-dot {
-  width: 12px;
-  height: 12px;
-  background: #4dd0e1;
-  border-radius: 50%;
+.drag-handle {
+  color: rgba(255, 255, 255, 0.4);
+  cursor: grab;
+  flex-shrink: 0;
+  transition: color 0.2s;
+
+  &:active {
+    cursor: grabbing;
+    color: #26c6da;
+  }
+}
+
+:host.cdk-drag-dragging .training-item {
+  background: linear-gradient(135deg, rgba(26, 188, 156, 0.25), rgba(52, 152, 219, 0.25));
+  border-color: rgba(38, 198, 218, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+:host.cdk-drag-placeholder .training-item {
+  opacity: 0.3;
+  border: 2px dashed rgba(38, 198, 218, 0.5);
 }

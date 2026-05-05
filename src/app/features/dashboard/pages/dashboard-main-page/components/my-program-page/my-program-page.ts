@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, inject, Input} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-my-program-page',
@@ -9,5 +10,9 @@ import {Component, Input} from '@angular/core';
 })
 export class MyProgramPage {
  @Input() numb: number=0
+  router=inject(Router)
 
+  protected onRouter() {
+    this.router.navigate(['program'])
+  }
 }

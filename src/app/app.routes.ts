@@ -8,7 +8,7 @@ import {ExercisesPage} from './features/exercises/pages/exercises-page/exercises
 import {MuscleGroupsList} from './features/exercises/pages/muscle-groups-list/muscle-groups-list';
 import {ExerciseListPage} from './features/exercises/pages/exercise-list-page/exercise-list-page';
 import {ExerciseDetailPage} from './features/exercises/pages/exercise-detail-page/exercise-detail-page';
-import {DataDowload} from './core/services/data-dowload/data-dowload';
+
 import {ExerciseCardWork} from './features/exercises/pages/exercise-card-work/exercise-card-work';
 import {WorkoutResultComponent} from './features/workouts/components/workout-result-component/workout-result-component';
 import {
@@ -23,10 +23,13 @@ import {
 import {authGuard} from './core/guards/auth-guard-guard';
 import {guestGuard} from './core/guards/guest-guard-guard';
 import {ProfilePageComponent} from './features/settings/profile-page-component/profile-page-component';
+import {ExercisePickerComponent} from './features/exercises/pages/exercise-picker-component/exercise-picker-component';
+import {WorkoutsEditComponent} from './features/dashboard/pages/workouts-edit/workouts-edit';
+import {NewWorkoutComponent} from './features/dashboard/pages/new-workout-component/new-workout-component';
 
 export const routes: Routes = [
   // 🏠 Layout (без children!)
-  { path: '', component: LayoutComponent },
+  { path: 'hello', component: LayoutComponent },
 
   // 📊 Dashboard
   {
@@ -36,13 +39,16 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'main', pathMatch: 'full' },
       { path: 'main', component: DashboardMainPage },
-      { path: 'workouts', component: WorkoutsPage }
+      { path: 'workouts', component: WorkoutsPage },
     ]
   },
 
   // 🏋️ Workouts
   { path: 'workout-day/:dayId', component: WorkoutDayDetailComponent },
   { path: 'workout-day/:dayId/:exerciseId', component: ExerciseWorkDetailComponent },
+  { path: 'workouts/edit', component: WorkoutsEditComponent },
+  { path: 'workouts/edit/:programId', component: WorkoutsEditComponent },  // ← додай
+  { path: 'new-workout', component: NewWorkoutComponent },                  // ← додай
 
   // 💪 Exercises
   {
@@ -55,15 +61,18 @@ export const routes: Routes = [
     ]
   },
 
+  //{ path: 'exercises/:muscleGroup/:exerciseId', component: ExerciseDetailPage },
+
   // 📈 Analytics / Results
   { path: 'result/:date', component: WorkoutResultComponent },
   { path: 'analytics', component: AnalyticsComponent },
 
   // 📦 Інше
-  { path: 'program', component: WorkoutProgramComponent },
+  { path: 'program', component: WorkoutProgramComponent},
+   {path: 'programs/add', component: ExercisePickerComponent},
   { path: 'dashboards', component: DashboardWidget },
   { path: 'exerciseWork', component: ExerciseCardWork },
-  { path: 'download-data', component: DataDowload },
+
 
   { path: 'profile', component: ProfilePageComponent ,canActivate: [authGuard],},
   // 🔑 Auth

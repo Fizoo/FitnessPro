@@ -1,5 +1,8 @@
 
-@if(list() ;as list){
+@if (store.isLoading()) {
+  <p>Завантаження...</p>
+}
+@if(exercise();as list){
   <div class="exercise-detail-page">
   <!-- Header -->
   <div class="exercise-header">

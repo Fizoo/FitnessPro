@@ -1,48 +1,53 @@
 import {Component, computed, inject, signal} from '@angular/core';
 import {DecimalPipe, Location} from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { CdkDragDrop, moveItemInArray, DragDropModule } from '@angular/cdk/drag-drop';
+import {FormsModule} from '@angular/forms';
+import {CdkDragDrop, DragDropModule, moveItemInArray} from '@angular/cdk/drag-drop';
 import {IExercisePlan, ISetPlan, IWorkoutDay, IWorkoutProgram} from '../../../../core/model/workout-program.models';
-import {ExercisePickerComponent} from '../../../exercises/pages/exercise-picker-component/exercise-picker-component';
 import {MOCK_PROGRAM} from '../../../../core/model/workout-program.mock';
-import {MOCK_EXERCISES} from '../../../../core/model/exercises.mock';
 import {Router} from '@angular/router';
+import {IExercise} from '../../../../core/model/Exercise-model';
+import {ExerciseStore} from '../../../../core/store/exercise.store';
 
 @Component({
   selector: 'app-workout-program',
   standalone: true,
-  imports: [DecimalPipe, FormsModule, DragDropModule, ExercisePickerComponent],
+  imports: [DecimalPipe, FormsModule, DragDropModule],
   templateUrl: './workout-program-component.html',
   styleUrl: './workout-program-component.scss'
 })
 export class WorkoutProgramComponent {
+  private exerciseStore = inject(ExerciseStore);
+  location = inject(Location);
+  router = inject(Router);
+
   program = signal<IWorkoutProgram>(MOCK_PROGRAM);
-  exercises = signal<any[]>(MOCK_EXERCISES);
   activeWeek = signal(0);
   showPicker = signal(false);
   addingToDayId = signal<string | null>(null);
   editingDayId = signal<string | null>(null);
   renameDayName = signal('');
   showCopyMenu = signal<string | null>(null);
-  location=inject(Location)
-  router=inject(Router)
 
   weeks = computed(() => this.program().weeks);
   currentWeekDays = computed(() => this.weeks()[this.activeWeek()]?.days ?? []);
   otherWeeks = computed(() =>
-    this.weeks().map((w, i) => ({ ...w, idx: i })).filter((_, i) => i !== this.activeWeek())
+    this.weeks().map((w, i) => ({...w, idx: i})).filter((_, i) => i !== this.activeWeek())
   );
 
-  getExercise(id: string) {
-    return this.exercises().find(e => e.id === id);
+  // ── Exercises з NgRx Store ──
+  getExercise(id: string): IExercise | undefined {
+    return this.exerciseStore.exercises().find(e => e.id === id);
   }
 
+  // ── GIF з Firebase ──
   gifPath(id: string): string {
-    return `assets/gifs/exercise_${id}.gif`;
+    const ex = this.getExercise(id);
+    if (ex?.gifUrl) return ex.gifUrl;
+    return `https://storage.googleapis.com/fitnessapp-48877.firebasestorage.app/gif/exercise_${id}.gif`;
   }
 
-  calcPR(ex: any): number | null {
-    return ex?.personalRecord ?? null;
+  calcPR(ex: IExercise | undefined): number | null {
+    return  null;
   }
 
   pctOfPR(sets: ISetPlan[], pr: number | null): number {
@@ -68,13 +73,14 @@ export class WorkoutProgramComponent {
     return day?.exercises.reduce((sum, ex) => sum + this.tonnage(ex), 0) ?? 0;
   }
 
-  // --- Picker ---
+  // ── Picker ──
   openPicker(dayId: string) {
     this.addingToDayId.set(dayId);
-    this.showPicker.set(true);
+    //this.showPicker.set(true);
+    this.router.navigate(['programs','add']).then((a)=>console.log('ddd',a))
   }
 
-  onExerciseSelected(ex: any) {
+  onExerciseSelected(ex: IExercise) {
     const dayId = this.addingToDayId();
     if (!dayId) return;
     this.program.update(prog => ({
@@ -83,7 +89,7 @@ export class WorkoutProgramComponent {
         ...w,
         days: w.days.map(d => d.id !== dayId ? d : {
           ...d,
-          exercises: [...d.exercises, { exerciseId: ex.id, sets: [{ weight: 0, reps: 0 }] }]
+          exercises: [...d.exercises, {exerciseId: ex.id, sets: [{weight: 0, reps: 0}]}]
         })
       })
     }));
@@ -91,7 +97,7 @@ export class WorkoutProgramComponent {
     this.addingToDayId.set(null);
   }
 
-  // --- Sets ---
+  // ── Sets ──
   updateSet(dayId: string, exId: string, setIdx: number, field: 'weight' | 'reps', value: number) {
     this.program.update(prog => ({
       ...prog,
@@ -101,7 +107,7 @@ export class WorkoutProgramComponent {
           ...d,
           exercises: d.exercises.map(ex => ex.exerciseId !== exId ? ex : {
             ...ex,
-            sets: ex.sets.map((s, si) => si !== setIdx ? s : { ...s, [field]: +value || 0 })
+            sets: ex.sets.map((s, si) => si !== setIdx ? s : {...s, [field]: +value || 0})
           })
         })
       })
@@ -117,7 +123,7 @@ export class WorkoutProgramComponent {
           ...d,
           exercises: d.exercises.map(ex => ex.exerciseId !== exId ? ex : {
             ...ex,
-            sets: [...ex.sets, { ...ex.sets[ex.sets.length - 1] ?? { weight: 0, reps: 0 } }]
+            sets: [...ex.sets, {...(ex.sets[ex.sets.length - 1] ?? {weight: 0, reps: 0})}]
           })
         })
       })
@@ -153,7 +159,7 @@ export class WorkoutProgramComponent {
     }));
   }
 
-  // --- Days ---
+  // ── Days ──
   addDay() {
     this.program.update(prog => ({
       ...prog,
@@ -162,7 +168,11 @@ export class WorkoutProgramComponent {
         const dayNum = w.days.length + 1;
         return {
           ...w,
-          days: [...w.days, { id: `day-${wi + 1}-${dayNum}-${Date.now()}`, name: `Day ${dayNum}`, exercises: [] }]
+          days: [...w.days, {
+            id: `day-${wi + 1}-${dayNum}-${Date.now()}`,
+            name: `Day ${dayNum}`,
+            exercises: []
+          }]
         };
       })
     }));
@@ -190,7 +200,7 @@ export class WorkoutProgramComponent {
       ...prog,
       weeks: prog.weeks.map((w, wi) => wi !== this.activeWeek() ? w : {
         ...w,
-        days: w.days.map(d => d.id !== dayId ? d : { ...d, name })
+        days: w.days.map(d => d.id !== dayId ? d : {...d, name})
       })
     }));
     this.editingDayId.set(null);
@@ -207,12 +217,15 @@ export class WorkoutProgramComponent {
       ...prog,
       weeks: prog.weeks.map((w, wi) => wi !== targetWeekIdx ? w : {
         ...w,
-        days: [...w.days, { ...sourceDay, id: `day-${targetWeekIdx + 1}-${w.days.length + 1}-${Date.now()}` }]
+        days: [...w.days, {
+          ...sourceDay,
+          id: `day-${targetWeekIdx + 1}-${w.days.length + 1}-${Date.now()}`
+        }]
       })
     }));
   }
 
-  // --- Drag & Drop ---
+  // ── Drag & Drop ──
   dropExercise(event: CdkDragDrop<any[]>, dayId: string) {
     this.program.update(prog => ({
       ...prog,
@@ -222,7 +235,7 @@ export class WorkoutProgramComponent {
           if (d.id !== dayId) return d;
           const exercises = [...d.exercises];
           moveItemInArray(exercises, event.previousIndex, event.currentIndex);
-          return { ...d, exercises };
+          return {...d, exercises};
         })
       })
     }));
@@ -235,16 +248,16 @@ export class WorkoutProgramComponent {
         if (wi !== this.activeWeek()) return w;
         const days = [...w.days];
         moveItemInArray(days, event.previousIndex, event.currentIndex);
-        return { ...w, days };
+        return {...w, days};
       })
     }));
   }
 
   protected onBack() {
-    this.location.back()
+    this.location.back();
   }
 
   protected onMain() {
-    this.router.navigate(['dashboard'])
+    this.router.navigate(['dashboard']);
   }
 }

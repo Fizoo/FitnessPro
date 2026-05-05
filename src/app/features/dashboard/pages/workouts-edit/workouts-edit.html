@@ -1,0 +1,43 @@
+<div class="edit-page">
+
+  <header class="edit-header">
+    <button mat-icon-button class="back-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="header-center">
+      <span class="header-label">Edit</span>
+      <span class="header-title">{{ programTitle() }}</span>
+    </div>
+    <div class="header-spacer"></div>
+  </header>
+
+  <main class="edit-content">
+    <div cdkDropList (cdkDropListDropped)="onDrop($event)" class="drag-list">
+      @for (day of days(); track day.id) {
+        <div cdkDrag>
+          <app-training-card-wrapper
+            [day]="day.order.toString()"
+            [title]="day.title"
+            [progress]="day.progress"
+            [dayId]="day.id"
+            [hasIndicator]="false"
+            (tapDay)="openDay(day.id)"
+            (editDay)="onEdit(day)"
+            (deleteDay)="onDelete(day.id)"
+          ></app-training-card-wrapper>
+
+        </div>
+      }
+    </div>
+
+    <button mat-stroked-button class="add-day-btn" (click)="addTrainingDay()">
+      <mat-icon>add</mat-icon>
+      Add training day
+    </button>
+  </main>
+
+  <footer class="edit-footer">
+    <button mat-flat-button class="save-btn" (click)="onSave()">SAVE</button>
+  </footer>
+
+</div>

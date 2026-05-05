@@ -1,33 +1,43 @@
 <div class="picker-wrap">
   <div class="picker-header">
+    <button class="back-btn" (click)="onBack()">
+      <i class="material-icons">arrow_back</i>
+    </button>
     <span class="picker-title">Додати вправу</span>
     <button class="icon-btn" (click)="cancelled.emit()">✕</button>
   </div>
 
   <input class="search-input" [(ngModel)]="search" placeholder="🔍 Пошук вправи..." />
-
-  <div class="chips-row">
-    @for (part of bodyParts; track part) {
-      <div class="chip" [class.active]="activeFilter() === part" (click)="activeFilter.set(part)">
-        {{ part === 'all' ? 'Всі' : part }}
-      </div>
+<!--
+  <div class="muscle-groups">
+    @for (group of bodyPartStore.bodyParts(); track group.id) {
+      <app-muscle-card
+        [muscleGroup]="group"
+        (click)="onMuscleGroupClick(group.name)"
+      />
     }
   </div>
+-->
 
-  <div class="ex-list">
-    @for (ex of filtered(); track ex.id) {
-      <div class="ex-row" [class.selected]="selectedEx()?.id === ex.id" (click)="select(ex)">
-        <img class="ex-img" [src]="gifPath(ex.id)" [alt]="ex.name" />
-        <div class="ex-info">
-          <div class="ex-name">{{ ex.name }}</div>
-          <div class="ex-meta">{{ ex.bodyPart }} · {{ ex.equipment }}</div>
+    <div class="chips-row">
+      @for (part of bodyParts(); track part) {
+        <div class="chip" [class.active]="activeFilter() === part" (click)="onFilterChange(part)">
+          {{ part === 'all' ? 'Всі' : part }}
         </div>
-        @if (ex.personalRecord) {
-          <div class="pr-badge">ПМ {{ ex.personalRecord }} кг</div>
-        }
-      </div>
-    }
-  </div>
+      }
+    </div>
+
+    <div class="ex-list" (scroll)="onScroll($event)">
+      @for (ex of filtered(); track ex.id) {
+        <div class="ex-row" [class.selected]="selectedEx()?.id === ex.id" (click)="select(ex)">
+          <img class="ex-img" [src]="ex.gifUrl" [alt]="ex.name" loading="lazy" />
+          <div class="ex-info">
+            <div class="ex-name">{{ ex.name }}</div>
+            <div class="ex-meta">{{ ex.bodyPart }} · {{ ex.equipment }}</div>
+          </div>
+        </div>
+      }
+    </div>
 
   <div class="picker-footer">
     <div class="selected-info">

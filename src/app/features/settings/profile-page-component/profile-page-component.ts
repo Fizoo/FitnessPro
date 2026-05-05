@@ -23,6 +23,7 @@ export class ProfilePageComponent {
   private storage = inject(Storage);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  userService=inject(UserStore)
 
   isSaving = signal(false);
   isUploadingPhoto = signal(false);

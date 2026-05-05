@@ -14,7 +14,9 @@ import {UserAvatarComponent} from '../../../../shared/components/user-avatar-com
 })
 export class DashHeader {
 
-  goBack() {
+
+
+  protected edit() {
 
   }
 }

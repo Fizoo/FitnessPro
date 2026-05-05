@@ -12,8 +12,9 @@
   }
 }
 .exercise-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
   gap: 1rem;
   padding: 1rem;
 }

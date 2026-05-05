@@ -1,12 +1,16 @@
-<div class="exercise-card" (click)="onSelect()">
+<div class="exercise-card" [class.selected]="isSelected()" (click)="onSelect()">
   <div class="exercise-image">
-    <img staticGif [src]="'assets/gifs/exercise_' + exercise().id + '.gif'"  width="60" height="60" alt="">
-      <!--  <img [src]="exercise().staticImageUrl || ('assets/img/' + exercise().bodyPart + '.png')" [alt]="exercise().name">-->
+    <img staticGif  [src]="exercise().gifUrl" [alt]="exercise().name" loading="lazy" />
+
   </div>
   <div class="exercise-info">
     <h3>{{ exercise().name }}</h3>
+    <span class="meta">{{ exercise().equipment }}</span>
   </div>
-  <button class="checkbox" [class.checked]="isSelected()" (click)="onCheckboxClick($event)">
-    <i class="material-icons">{{ isSelected() ? 'check_box' : 'check_box_outline_blank' }}</i>
-  </button>
+  @if (mode() === 'picker') {
+    <button class="checkbox" [class.checked]="isSelected()" (click)="onCheckboxClick($event)">
+      <i class="material-icons">{{ isSelected() ? 'check_box' : 'check_box_outline_blank' }}</i>
+    </button>
+  }
+
 </div>

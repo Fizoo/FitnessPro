@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, EventEmitter, inject, Output} from '@angular/core';
 import {MyProgramPage} from '../dashboard-main-page/components/my-program-page/my-program-page';
 import {TrainingCardWrapper} from '../../../workouts/pages/training-card-wrapper/training-card-wrapper';
 import {MatIconButton} from '@angular/material/button';
@@ -22,7 +22,12 @@ import {Router} from '@angular/router';
 export class WorkoutsPage {
   router=inject(Router)
 
+  @Output() workoutDay=new EventEmitter<number>()
+
   protected openDay(dayId: number) {
     this.router.navigate(['workout-day', dayId]);
+  }
+  onWorkoutDay(dayId: number){
+    this.workoutDay.emit(dayId)
   }
 }

@@ -1,5 +1,5 @@
 import {Component, inject, signal} from '@angular/core';
-import {INotification, NotificationService, NotificationType} from '../../../core/services/notification-service';
+import {INotification, NotificationService} from '../../../core/services/notification-service';
 
 @Component({
   selector: 'app-toast-component',
@@ -8,6 +8,7 @@ import {INotification, NotificationService, NotificationType} from '../../../cor
   styleUrl: './toast-component.scss',
 })
 export class ToastComponent {
+
   notifications = signal<INotification[]>([]);
   private counter = 0;
 
@@ -24,7 +25,7 @@ export class ToastComponent {
     return icons[type];
   }
 
-  success(message: string, duration = 3000): void {
+ /* success(message: string, duration = 3000): void {
     this.show(message, 'success', duration);
   }
 
@@ -50,6 +51,6 @@ export class ToastComponent {
     this.notifications.update(list => [...list, { id, message, type }]);
     setTimeout(() => this.dismiss(id), duration);
   }
-
+*/
 
 }

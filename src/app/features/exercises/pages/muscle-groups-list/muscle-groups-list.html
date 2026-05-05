@@ -1,12 +1,19 @@
+@if (bodyPartStore.isLoading()) {
+  <p>Завантаження...</p>
+}
+
+@if (bodyPartStore.error(); as err) {
+  <p class="error">{{ err }}</p>
+}
 
 <!-- Success state -->
-@if (data(); as groups) {
-  <div class="muscle-groups">
-    @for (group of groups; track group.id) {
-      <app-muscle-card
-        [muscleGroup]="group"
-        (click)="onMuscleGroupClick(group.name)"
-      />
-    }
-  </div>
-}
+
+<div class="muscle-groups">
+  @for (group of filteredGroups(); track group.id) {
+    <app-muscle-card
+      [muscleGroup]="group"
+      (click)="onMuscleGroupClick(group.name)"
+    />
+  }
+</div>
+

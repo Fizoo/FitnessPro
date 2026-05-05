@@ -1,9 +1,10 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import {Component, effect, inject, OnInit, signal} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {map} from 'rxjs';
-import {exercisesData} from '../../../../../../public/data/data';
+import {ExerciseStore} from '../../../../core/store/exercise.store';
+
 
 interface Video {
   id: string;
@@ -19,31 +20,40 @@ interface Video {
   standalone: true,
   styleUrl: './exercise-detail-page.scss'
 })
-export class ExerciseDetailPage {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private sanitizer = inject(DomSanitizer);
+export class ExerciseDetailPage implements OnInit{
+  store    = inject(ExerciseStore);
+  route    = inject(ActivatedRoute);
+  router    = inject(Router);
+  sanitizer=inject(DomSanitizer)
+  exercise = this.store.selectedExercise;
 
+  ngOnInit() {
+    const muscleGroup = this.route.snapshot.paramMap.get('muscleGroup')!;
+    const exerciseId  = this.route.snapshot.paramMap.get('exerciseId')!;
+    this.store.loadById(muscleGroup, exerciseId);
+  }
 
-  readonly userParams = toSignal(
+  readonly params = toSignal(
     this.route.paramMap.pipe(
-      map(params => ({
-        exerciseId: params.get('exerciseId') ?? '',
-        muscleGroup: params.get('muscleGroup') ?? ''
+      map(p => ({
+        exerciseId:  p.get('exerciseId') ?? '',
+        muscleGroup: p.get('muscleGroup') ?? ''
       }))
     ),
     { initialValue: { exerciseId: '', muscleGroup: '' } }
   );
 
-  list = computed(() => {
-    const { exerciseId, muscleGroup } = this.userParams();
-    const group = exercisesData.find(g => g.params === muscleGroup);
-    const exercise = group?.data.find(e => e.id === exerciseId) ?? null;
-    console.log('muscleGroup:', muscleGroup, 'exerciseId:', exerciseId, 'exercise:', exercise);
-    return exercise;
-  });
+  constructor() {
+    effect(() => {
+      const { exerciseId, muscleGroup } = this.params();
+      if (exerciseId && muscleGroup) {
+        this.store.loadById(muscleGroup, exerciseId);
+      }
+    });
+  }
 
-  //exercise = signal<Exercise | null>(null);
+
+
   exerciseVideos = signal<Video[]>([]);
   //exerciseImg=signal()
 
@@ -77,6 +87,5 @@ export class ExerciseDetailPage {
 
 
   protected onClick(list: any) {
-
   }
 }

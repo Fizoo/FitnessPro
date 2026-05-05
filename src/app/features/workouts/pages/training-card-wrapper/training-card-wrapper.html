@@ -1,17 +1,26 @@
+<div
+  class="training-item"
+  (mousedown)="onPressStart($event)"
+  (mouseup)="onPressEnd($event)"
+  (mouseleave)="onPressCancel()"
+  (touchstart)="onPressStart($event)"
+  (touchend)="onPressEnd($event)"
+  (touchcancel)="onPressCancel()"
+  (contextmenu)="$event.preventDefault()"
+>
 
-<div class="training-item" >
-  <div [style.--progress-color]="getProgressColor(progress)"
-
-    class="training-item__progress" >
+  <div
+    [style.--progress-color]="getProgressColor(progress)"
+    class="training-item__progress"
+  >
     <mat-progress-spinner
-
       [mode]="'determinate'"
       [value]="progress"
       [diameter]="70"
       [strokeWidth]="4"
       class="custom-spinner"
     ></mat-progress-spinner>
-    <span  class="progress-text">{{ progress }}%</span>
+    <span class="progress-text">{{ progress }}%</span>
   </div>
 
   <div class="training-item__content">
@@ -24,5 +33,12 @@
       <div class="indicator-dot"></div>
     </div>
   }
+
+  <mat-icon
+    cdkDragHandle
+    class="drag-handle"
+    (mousedown)="$event.stopPropagation()"
+    (touchstart)="$event.stopPropagation()"
+  >drag_handle</mat-icon>
 
 </div>

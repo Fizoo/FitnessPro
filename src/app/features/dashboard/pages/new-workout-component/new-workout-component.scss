@@ -1,0 +1,57 @@
+.new-workout-page {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: 750px;
+  margin: 0 auto;
+  background: var(--bg-color, #0f0f1a);
+}
+
+.nw-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 8px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  .back-btn { color: #26c6da; }
+
+  .header-label {
+    flex: 1;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .header-spacer { width: 40px; }
+}
+
+.nw-content {
+  flex: 1;
+  padding: 24px 16px;
+
+  .title-field { width: 100%; }
+}
+
+.nw-footer {
+  flex-shrink: 0;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.create-btn {
+  width: 100%;
+  height: 52px;
+  background: linear-gradient(135deg, #26c6da, #3498db);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 12px;
+
+  &:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.3);
+  }
+}

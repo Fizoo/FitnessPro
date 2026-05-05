@@ -4,7 +4,8 @@ import {
   doc, writeBatch
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import {IData} from '../../../../public/data/data';
+import {IData} from '../model/Exercise-model';
+
 
 
 interface IBodyPart {

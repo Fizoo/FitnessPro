@@ -1,0 +1,33 @@
+.dialog-wrap {
+  padding: 24px;
+  background: #1a1a2e;
+  border-radius: 16px;
+  text-align: center;
+}
+.subtitle {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  margin: 0 0 4px;
+}
+.title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 24px;
+}
+.actions {
+  display: flex;
+  gap: 12px;
+}
+.btn-edit {
+  flex: 1;
+  color: #26c6da;
+  border-color: #26c6da;
+  border-radius: 8px;
+}
+.btn-delete {
+  flex: 1;
+  color: #ef5350;
+  border-color: #ef5350;
+  border-radius: 8px;
+}

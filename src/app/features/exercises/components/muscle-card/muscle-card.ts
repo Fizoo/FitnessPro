@@ -1,6 +1,6 @@
 import {Component, input, output} from '@angular/core';
 import {NgOptimizedImage, UpperCasePipe} from '@angular/common';
-import {IMuscleGroup} from '../../../../core/model/Exercise-model';
+import {IBodyPart} from '../../../../core/store/Body.part.store';
 
 
 @Component({
@@ -15,7 +15,7 @@ import {IMuscleGroup} from '../../../../core/model/Exercise-model';
 })
 export class MuscleCard {
 
-  muscleGroup = input.required<IMuscleGroup>();
+  muscleGroup = input.required<IBodyPart>();
   routedTo=output<string>()
 
   onSelect() {

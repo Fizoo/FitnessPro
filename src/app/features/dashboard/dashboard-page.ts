@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {faClock} from '@fortawesome/free-solid-svg-icons';
 import {DashHeader} from './components/dash-header/dash-header';
 import {DashFooter} from './components/dash-footer/dash-footer';
 import {RouterOutlet} from '@angular/router';
@@ -16,5 +15,4 @@ import {RouterOutlet} from '@angular/router';
 })
 export class DashboardPage {
 
- faClock = faClock;
 }

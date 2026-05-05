@@ -4,6 +4,7 @@ import {toSignal} from '@angular/core/rxjs-interop';
 import {map} from 'rxjs';
 import {WORKOUT_DAYS} from '../../../../shared/workout.mock';
 import {StaticGif} from '../../../../shared/directives/static-gif';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-workout-day-detail-component',
@@ -16,6 +17,7 @@ import {StaticGif} from '../../../../shared/directives/static-gif';
 export class WorkoutDayDetailComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  location=inject(Location)
 
   dayId = toSignal(this.route.params.pipe(map(p => +p['dayId'])));
 
@@ -31,7 +33,10 @@ export class WorkoutDayDetailComponent {
     return '#EF5350';
   }
 
-  goBack() { this.router.navigate(['/dashboard/workouts'], { relativeTo: this.route }); }
+  goBack() {
+    this.location.back()
+   // this.router.navigate(['/dashboard/workouts'], { relativeTo: this.route });
+  }
 
   openExercise(exId: string) {
     this.router.navigate([exId], { relativeTo: this.route });
@@ -39,5 +44,9 @@ export class WorkoutDayDetailComponent {
 
   startWorkout() {
     this.router.navigate([this.day().exercises[0].id], { relativeTo: this.route });
+  }
+
+  protected save() {
+
   }
 }

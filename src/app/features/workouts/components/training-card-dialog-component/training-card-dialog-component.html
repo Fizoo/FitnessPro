@@ -1,0 +1,12 @@
+<div class="dialog-wrap">
+  <p class="subtitle">{{ data.day }} workout day</p>
+  <h2 class="title">{{ data.title }}</h2>
+  <div class="actions">
+    <button mat-stroked-button class="btn-edit" (click)="close('edit')">
+      <mat-icon>edit</mat-icon> Edit
+    </button>
+    <button mat-stroked-button class="btn-delete" (click)="close('delete')">
+      <mat-icon>delete_outline</mat-icon> Delete
+    </button>
+  </div>
+</div>

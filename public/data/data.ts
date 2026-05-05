@@ -1,13 +1,5 @@
-import {IExercise, IMuscleGroup} from '../../src/app/core/model/Exercise-model';
+import {IData, IMuscleGroup} from '../../src/app/core/model/Exercise-model';
 
-export interface IData {
-  name: string,
-  data: IExercise[],
-  id: number,
-  exerciseCount: number
-  imageUrl: string,
-  params: string
-}
 
 export const bodyPartsData: IMuscleGroup[] = [
   {

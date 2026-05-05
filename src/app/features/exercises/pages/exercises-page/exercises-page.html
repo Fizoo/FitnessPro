@@ -1,22 +1,23 @@
 <div class="exercises-page">
-
-  <app-header-exercise
-    title="Exercises"
-    [showBookmark]="true"
-    [showFilter]="true"
-  />
-
-  <div class="search-container">
-    <i class="material-icons">search</i>
-    <input type="text" placeholder="Search" [(ngModel)]="searchQuery" (input)="onSearch()">
-  </div>
-
-<!--  @if (selectedCount()>0) {
-    <p class="selected-count" [class.has-selection]="selectedCount() > 0">Selected: {{ selectedCount() }}</p>
-  }-->
-
+  @if (!isDetailPage()) {
+    <app-header-exercise
+      title="Exercises"
+      (back)="onBack()"
+      [showBookmark]="true"
+      [showFilter]="true"
+    />
+    <div class="search-container">
+      <i class="material-icons">search</i>
+      <input
+        type="text"
+        placeholder="Search"
+        [value]="store.searchQuery()"
+        #searchInput
+        (input)="store.setSearch(searchInput.value)"
+      >
+    </div>
+  }
   <div class="content">
     <router-outlet></router-outlet>
   </div>
-
 </div>

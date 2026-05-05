@@ -1,0 +1,35 @@
+<div class="new-workout-page">
+
+  <header class="nw-header">
+    <button mat-icon-button class="back-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="header-label">New workout</span>
+    <div class="header-spacer"></div>
+  </header>
+
+  <main class="nw-content">
+    <mat-form-field appearance="outline" class="title-field">
+      <mat-label>Enter workout title</mat-label>
+      <input
+        matInput
+        [ngModel]="title()"
+        (ngModelChange)="title.set($event)"
+        placeholder="e.g. Bench & Biceps"
+        autocomplete="off"
+      />
+    </mat-form-field>
+  </main>
+
+  <footer class="nw-footer">
+    <button
+      mat-flat-button
+      class="create-btn"
+      [disabled]="!title().trim()"
+      (click)="onCreate()"
+    >
+      CREATE
+    </button>
+  </footer>
+
+</div>

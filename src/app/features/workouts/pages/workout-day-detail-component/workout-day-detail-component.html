@@ -34,7 +34,11 @@
 
   <!-- Buttons -->
   <div class="bottom-actions">
+    @if(day().exercises.length==0){
     <button class="btn-reset">RESET PROGRESS</button>
     <button class="btn-start" (click)="startWorkout()">BEGIN WORKOUT</button>
+    } @else {
+      <button (click)="save()" class="btn-start">SAVE</button>
+    }
   </div>
 </div>
